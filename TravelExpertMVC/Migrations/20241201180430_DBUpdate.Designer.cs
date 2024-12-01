@@ -12,8 +12,8 @@ using TravelExpertMVC.Data;
 namespace TravelExpertMVC.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    [Migration("20241130060609_Initial")]
-    partial class Initial
+    [Migration("20241201180430_DBUpdate")]
+    partial class DBUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,7 +83,7 @@ namespace TravelExpertMVC.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true)
@@ -129,7 +129,7 @@ namespace TravelExpertMVC.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true)
@@ -388,6 +388,16 @@ namespace TravelExpertMVC.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
+                    b.Property<string>("Prefs")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("ProfileImg")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
                     b.HasKey("CustomerId")
                         .HasName("aaaaaCustomers_PK");
 
@@ -549,7 +559,7 @@ namespace TravelExpertMVC.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PackageProductSupplierId")
-                        .HasName("PK__Packages__53E8ED997B14926F");
+                        .HasName("PK__Packages__53E8ED99A4B633EA");
 
                     b.HasIndex(new[] { "PackageId" }, "PackagesPackages_Products_Suppliers");
 
@@ -557,7 +567,7 @@ namespace TravelExpertMVC.Migrations
 
                     b.HasIndex(new[] { "ProductSupplierId" }, "Products_SuppliersPackages_Products_Suppliers");
 
-                    b.HasIndex(new[] { "PackageId", "ProductSupplierId" }, "UQ__Packages__29CA8E95D9D6058F")
+                    b.HasIndex(new[] { "PackageId", "ProductSupplierId" }, "UQ__Packages__29CA8E9590D3A63F")
                         .IsUnique();
 
                     b.ToTable("Packages_Products_Suppliers");
@@ -792,6 +802,9 @@ namespace TravelExpertMVC.Migrations
 
             modelBuilder.Entity("TravelExpertMVC.Models.User", b =>
                 {
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit")
                         .HasColumnName("is_admin");
@@ -816,6 +829,8 @@ namespace TravelExpertMVC.Migrations
                         .HasColumnName("userid");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Userid"));
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Users");
                 });
@@ -983,6 +998,16 @@ namespace TravelExpertMVC.Migrations
                     b.Navigation("Affiliation");
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("TravelExpertMVC.Models.User", b =>
+                {
+                    b.HasOne("TravelExpertMVC.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .HasConstraintName("fk_CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("TravelExpertMVC.Models.Affiliation", b =>

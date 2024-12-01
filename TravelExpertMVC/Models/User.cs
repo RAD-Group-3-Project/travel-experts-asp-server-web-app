@@ -24,4 +24,9 @@ public partial class User
 
     [Column("is_admin")]
     public bool IsAdmin { get; set; }
+
+    public int? CustomerId { get; set; }
+
+    [ForeignKey("CustomerId")]
+    public virtual Customer? Customer { get; set; }
 }

@@ -44,6 +44,14 @@ public partial class Customer
 
     public int? AgentId { get; set; }
 
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? Prefs { get; set; }
+
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? ProfileImg { get; set; }
+
     [ForeignKey("AgentId")]
     [InverseProperty("Customers")]
     public virtual Agent? Agent { get; set; }
