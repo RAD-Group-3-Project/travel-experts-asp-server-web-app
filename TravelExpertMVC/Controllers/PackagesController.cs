@@ -1,8 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TravelExpertMVC.Data;
+using TravelExpertMVC.Models;
 
 namespace TravelExpertMVC.Controllers;
 public class PackagesController : Controller
 {
+    TravelExpertContext _context;
+    // GET: PackagesController
+    public PackagesController(TravelExpertContext context)
+    {
+        _context = context;
+    }
+
     // GET: PackageController
     public ActionResult Index()
     {
@@ -13,55 +22,76 @@ public class PackagesController : Controller
     // GET: PackageController/Details/5
     public ActionResult Details(int id)
     {
-        return View();
+        Package? package = PackagesManager.GetPackageById(_context, id);
+        return View(package);
     }
 
     // GET: PackageController/Create
     public ActionResult Create()
     {
-        return View();
+        Package package = new Package();
+        return View(package);
     }
 
     // POST: PackageController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(IFormCollection collection)
+    public ActionResult Create(Package package)
     {
         try
         {
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                PackagesManager.AddPackage(_context, package);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(package);
+            }
         }
         catch
         {
-            return View();
+            return View(package);
         }
     }
 
     // GET: PackageController/Edit/5
     public ActionResult Edit(int id)
     {
-        return View();
+        Package? package = PackagesManager.GetPackageById(_context, id);
+        return View(package);
     }
 
     // POST: PackageController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
+    public ActionResult Edit(int id, Package package)
     {
         try
         {
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                PackagesManager.UpdatePackage(_context, id, package);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(package);
+            }
         }
         catch
         {
-            return View();
+            return View(package);
         }
     }
 
     // GET: PackageController/Delete/5
+    [HttpGet]
     public ActionResult Delete(int id)
     {
-        return View();
+        Package? package = PackagesManager.GetPackageById(_context, id);
+        return View(package);
     }
 
     // POST: PackageController/Delete/5
@@ -71,6 +101,7 @@ public class PackagesController : Controller
     {
         try
         {
+            PackagesManager.DeletePackage(_context, id);
             return RedirectToAction(nameof(Index));
         }
         catch
