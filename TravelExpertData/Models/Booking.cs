@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace TravelExpertMVC.Models;
+namespace TravelExpertData.Models;
 
 [Index("CustomerId", Name = "BookingsCustomerId")]
 [Index("CustomerId", Name = "CustomersBookings")]

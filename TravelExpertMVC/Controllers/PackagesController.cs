@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelExpertMVC.Data;
-using TravelExpertMVC.Models;
+using TravelExpertData.Data;
+using TravelExpertData.Models;
+using TravelExpertData.Repository;
 
 namespace TravelExpertMVC.Controllers;
 public class PackagesController : Controller
@@ -15,14 +16,14 @@ public class PackagesController : Controller
     // GET: PackageController
     public ActionResult Index()
     {
-        var packages = new List<string> { "Beach Paradise", "Mountain Adventure", "City Lights" };
+        List<Package> packages = PackagesRepository.GetPackages(_context);
         return View(packages);
     }
 
     // GET: PackageController/Details/5
     public ActionResult Details(int id)
     {
-        Package? package = PackagesManager.GetPackageById(_context, id);
+        Package? package = PackagesRepository.GetPackageById(_context, id);
         return View(package);
     }
 
@@ -42,7 +43,7 @@ public class PackagesController : Controller
         {
             if (ModelState.IsValid)
             {
-                PackagesManager.AddPackage(_context, package);
+                PackagesRepository.AddPackage(_context, package);
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -59,7 +60,7 @@ public class PackagesController : Controller
     // GET: PackageController/Edit/5
     public ActionResult Edit(int id)
     {
-        Package? package = PackagesManager.GetPackageById(_context, id);
+        Package? package = PackagesRepository.GetPackageById(_context, id);
         return View(package);
     }
 
@@ -72,7 +73,7 @@ public class PackagesController : Controller
         {
             if (ModelState.IsValid)
             {
-                PackagesManager.UpdatePackage(_context, id, package);
+                PackagesRepository.UpdatePackage(_context, id, package);
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -90,7 +91,7 @@ public class PackagesController : Controller
     [HttpGet]
     public ActionResult Delete(int id)
     {
-        Package? package = PackagesManager.GetPackageById(_context, id);
+        Package? package = PackagesRepository.GetPackageById(_context, id);
         return View(package);
     }
 
@@ -101,7 +102,7 @@ public class PackagesController : Controller
     {
         try
         {
-            PackagesManager.DeletePackage(_context, id);
+            PackagesRepository.DeletePackage(_context, id);
             return RedirectToAction(nameof(Index));
         }
         catch

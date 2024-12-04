@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
-using TravelExpertMVC.Data;
+using TravelExpertData.Data;
+using TravelExpertData.Models;
 
-namespace TravelExpertMVC.Models
+namespace TravelExpertData.Repository
 {
-    public class PackagesManager
+    public class PackagesRepository
     {
         // get all packages
         public static List<Package> GetPackages(TravelExpertContext db)
         {
-            return db.Packages.Include(p => p.PackagesProductsSuppliers).OrderBy(p => p.PkgName).ToList();
+            return db.Packages.Include(p => p.PackagesProductsSuppliers).ToList();
+            //return Queryable.OrderBy<Package, string>(db.Packages.Include(p => p.PackagesProductsSuppliers), p => p.PkgName).ToList();
         }
 
         // add package
