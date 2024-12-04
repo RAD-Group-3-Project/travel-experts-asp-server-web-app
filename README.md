@@ -2,7 +2,7 @@
 
 ## Course Information
 
-**Course Name:** .NET Web Applications
+**Course Name:** .NET Web Applications  
 **Course Code:** CPRG-214-A  
 **Instructor:** Samuel Sofela  
 **Project Due Date:** 12-16-2024  
