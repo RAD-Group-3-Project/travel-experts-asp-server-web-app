@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TravelExpertMVC.Data;
+using TravelExpertData.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TravelExpertMVC.Models;
+using TravelExpertData.Models;
 
-namespace TravelExpertMVC.Data;
+namespace TravelExpertData.Data;
 
 public partial class TravelExpertContext : DbContext
 {
