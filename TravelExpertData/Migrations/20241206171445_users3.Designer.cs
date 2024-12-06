@@ -12,8 +12,8 @@ using TravelExpertData.Data;
 namespace TravelExpertData.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    [Migration("20241206160246_identity")]
-    partial class identity
+    [Migration("20241206171445_users3")]
+    partial class users3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,36 @@ namespace TravelExpertData.Migrations
                     b.HasIndex("AgencyId");
 
                     b.ToTable("Agents");
+                });
+
+            modelBuilder.Entity("TravelExpertData.Models.AppUser", b =>
+                {
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_admin");
+
+                    b.Property<string>("UserLogin")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("user_login");
+
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("user_password");
+
+                    b.Property<int>("Userid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("userid");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Userid"));
+
+                    b.ToTable("App_Users");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Booking", b =>
@@ -798,36 +828,6 @@ namespace TravelExpertData.Migrations
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("TripTypeId"), false);
 
                     b.ToTable("TripTypes");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.User", b =>
-                {
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_admin");
-
-                    b.Property<string>("UserLogin")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("user_login");
-
-                    b.Property<string>("UserPassword")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("user_password");
-
-                    b.Property<int>("Userid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("userid");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Userid"));
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Agent", b =>
