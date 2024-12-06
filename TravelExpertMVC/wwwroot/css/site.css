@@ -51,7 +51,11 @@ body {
 
 #home {
     height: 100vh;
-    background-image: url('https://via.placeholder.com/1600x900');
+    background-image: url('../images/hero-pic-2.jpg');
     background-size: cover;
     background-position: center;
+}
+
+.text-right {
+    text-align: right;
 }
