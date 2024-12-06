@@ -6,6 +6,7 @@ using TravelExpertData.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("TravelExpertContext") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<TravelExpertContext>(options =>

@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model TravelExpertMVC.Models.RegisterViewModel
+
 @{
+
 }
+<h2>Register</h2>
+<form asp-action="Register" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+
+  
+    <div>
+        <label asp-for="FirstName" class="control-label"> </label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="LastName" class="control-label"> </label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="Email" class="control-label"> </label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="HomePhone" class="control-label"> </label>
+        <input asp-for="HomePhone" class="form-control" />
+        <span asp-validation-for="HomePhone" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="BusPhone" class="control-label"> </label>
+        <input asp-for="BusPhone" class="form-control" />
+        <span asp-validation-for="BusPhone" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="Address" class="control-label"> </label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="City" class="control-label"> </label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="Password" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="Prov" class="control-label"> </label>
+        <input asp-for="Prov" class="form-control" />
+        <span asp-validation-for="Prov" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="Postal" class="control-label"> </label>
+        <input asp-for="Postal" class="form-control" />
+        <span asp-validation-for="Postal" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="Country" class="control-label"> </label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="Password" class="control-label"> </label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-dnager"></span>
+    </div>
+    <div>
+        <label asp-for="ConfirmPassword" class="control-label"> </label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-dnager"></span>
+    </div>
+
+
+
+
+    <div class="Row">
+        <div>
+            <a asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]">Already a member? Click here.</a>
+        </div>
+        <div>
+            <input type="submit" value="Register" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
