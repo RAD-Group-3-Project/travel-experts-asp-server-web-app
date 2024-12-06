@@ -1,8 +1,10 @@
-﻿@{
+﻿@model TravelExpertMVC.Models.HomeViewModel
+
+@{
     ViewData["Title"] = "Home";
 }
-<div class="text-center my-5">
-    <h1 class="display-4">Welcome to Travel Experts</h1>
-    <p class="lead">Find your dream vacation with us!</p>
-    <a href="/Packages" class="btn btn-primary btn-lg">Explore Packages</a>
+<div >
+    <partial name="_HomeSection"/>
+    <partial name="_PackagesSection" model="@Model.Packages"/>
+    <partial name="_ContactSection" model="@Model.Agencies"/>
 </div>
