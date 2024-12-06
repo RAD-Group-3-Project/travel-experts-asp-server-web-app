@@ -20,3 +20,37 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.btn-primary-custom {
+    background-color: #ffd358 !important;
+    color: #002a45 !important;
+    border: none;
+}
+
+.btn-primary-custom:hover {
+    background-color: #ffb915 !important;
+    color: #002a45 !important;
+}
+
+.bg-primary-custom {
+    background-color: #002a45 !important;
+}
+
+.text-accent {
+    color: #ffd358 !important;
+}
+
+.nav-link:hover {
+    color: #ffd358 !important;
+}
+
+.hero-overlay {
+    background: linear-gradient(to bottom, rgba(1, 27, 47, 0.8), rgba(1, 27, 47, 0.9));
+}
+
+#home {
+    height: 100vh;
+    background-image: url('https://via.placeholder.com/1600x900');
+    background-size: cover;
+    background-position: center;
+}

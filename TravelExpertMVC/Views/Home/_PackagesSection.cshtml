@@ -1,0 +1,34 @@
+﻿@model IEnumerable<TravelExpertData.Models.Package>
+
+<section id="about-packages" class="py-5">
+    <div class="container text-center">
+        <h2 class="fs-2 text-warning fw-bold mb-3">Why Choose Our Packages?</h2>
+        <p class="text-light mb-4">
+            Our vacation packages are designed to provide unforgettable
+            experiences. Whether you're seeking adventure, relaxation, or cultural
+            exploration, we have the perfect trip for you.
+        </p>
+    </div>
+</section>
+<section id="vacation-packages" class="py-5 bg-dark">
+    <div class="container text-center">
+        <h2 class="fs-2 text-warning fw-bold mb-5">Vacation Packages</h2>
+        <div class="row g-4">
+            @foreach (var package in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="@package.PkgName" />
+                        <div class="card-body">
+                            <h5 class="card-title text-dark fw-bold">@package.PkgName</h5>
+                            <p class="card-text text-muted">@package.PkgDesc</p>
+                            <p class="card-text text-dark"><strong>Start Date:</strong> @package.PkgStartDate</p>
+                            <p class="card-text text-dark"><strong>Price:</strong> @package.PkgBasePrice</p>
+                            <a href="#register" class="btn btn-primary-custom">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

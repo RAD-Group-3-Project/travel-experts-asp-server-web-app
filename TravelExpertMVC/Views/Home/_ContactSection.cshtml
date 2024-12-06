@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TravelExpertData.Models.Agency>
+
+<section id="contact" class="text-center py-5 bg-primary-custom">
+    <div class="container">
+        <h2 class="fs-1 text-warning fw-bold mb-5">Contact Us</h2>
+        <div class="row gy-4">
+            @foreach (var agency in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-header bg-warning text-dark">
+                            <h4 class="fw-bold">@agency.AgncyCity Office</h4>
+                            <p class="mb-0">@agency.AgncyAddress, @agency.AgncyCity, @agency.AgncyProv</p>
+                            <p>Email: <a href="tel:@agency.AgncyPhone" class="text-muted text-decoration-none">@agency.AgncyPhone</a></p>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="fw-bold text-warning">Team Members</h5>
+                            <ul class="list-unstyled text-start">
+                                @foreach (var agent in agency.Agents)
+                                {
+                                    <li>
+                                        <strong>@agent.AgtFirstName @(agent.AgtMiddleInitial ?? "") @agent.AgtLastName</strong> - @agent.AgtPosition |
+                                        <a href="mailto:@agent.AgtEmail" class="text-warning">@agent.AgtEmail</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
