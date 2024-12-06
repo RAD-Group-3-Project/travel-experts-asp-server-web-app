@@ -5,6 +5,7 @@ public class AccountController : Controller
 {
     public IActionResult Login()
     {
+        TempData["IsCustomBg"] = true;
         return View();
     }
 

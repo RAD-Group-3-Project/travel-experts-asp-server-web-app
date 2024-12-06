@@ -37,6 +37,10 @@ body {
     background-color: #002a45 !important;
 }
 
+.bg-dark-custom {
+    background-color: #001b2f !important;
+}
+
 .text-accent {
     color: #ffd358 !important;
 }

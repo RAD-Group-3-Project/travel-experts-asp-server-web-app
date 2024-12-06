@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TravelExpertMVC.styles.css" asp-append-version="true" />
 </head>
-<body class="bg-dark text-white">
+<body class="@(TempData["IsCustomBg"] != null && (bool)TempData["IsCustomBg"] ? "bg-dark-custom" : "bg-dark") text-white">
     <header>
-        <nav class="navbar navbar-expand-lg bg-primary-custom navbar-dark sticky-top">
+        <nav class="navbar navbar-expand-lg bg-primary-custom navbar-dark sticky-top shadow">
             <div class="container">
                 <a href="#" class="d-flex align-items-center text-decoration-none">
                     <div class="rounded-circle bg-warning text-center d-flex align-items-center justify-content-center"
