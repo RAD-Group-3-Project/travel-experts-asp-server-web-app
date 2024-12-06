@@ -1,0 +1,32 @@
+﻿@model TravelExpertMVC.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="bg-white rounded-lg shadow-lg p-4 p-md-5 w-100" style="max-width: 400px;">
+        <h2 class="text-center text-primary mb-4" style="color: #002A45;">
+            Login
+        </h2>
+        <form>
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label" style="color: #002A45;">Email</label>
+                <input asp-for="Username" type="email" class="form-control" placeholder="Enter your email"/>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="Password" class="form-label" style="color: #002A45;">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" style="background-color: #FFD358; color: #002A45; border: none;">
+                Login
+            </button>
+        </form>
+        <p class="text-center mt-3" style="color: #003F66;">
+            Don't have an account?
+            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-decoration-none" style="color: #FFD358;">Register</a>
+        </p>
+    </div>
+</section>

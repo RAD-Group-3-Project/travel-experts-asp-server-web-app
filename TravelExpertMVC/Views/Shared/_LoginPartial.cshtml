@@ -11,12 +11,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                     @* <a class="dropdown-item" asp-action="Logout" asp-controller="Account">
+                     <a class="dropdown-item" asp-action="Logout" asp-controller="Account">
                          Logout
-                     </a> *@
-                    <a class="dropdown-item">
-                        Logout
-                    </a>
+                     </a>
                 </li>
             </ul>
         </li>
@@ -24,7 +21,7 @@
     else
     {
         <li class="nav-item">
-            <a href="#login" class="btn btn-primary-custom ms-3">Login</a>
+            <a class="btn btn-primary-custom ms-3" asp-action="Login" asp-controller="Account">Login</a>
         </li>
     }
 </ul>
