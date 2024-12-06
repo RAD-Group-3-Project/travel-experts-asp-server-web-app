@@ -75,10 +75,13 @@ public class AccountController : Controller
                 CustEmail = newRegistration.Email
             };
             CustomerRepository.AddCustomer(_context, newCustomer);
+            int custId = CustomerRepository.GetLastId(_context); 
             User newUser = new User()
             {
                 UserName = newRegistration.Email,
                 Email = newRegistration.Email,
+                PhoneNumber = newRegistration.HomePhone,
+                CustomerId = custId
 
             };
             var userResult = await userManager.CreateAsync(newUser, newRegistration.Password);
