@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TravelExpertMVC</title>
+    <title>@ViewData["Title"] - Travel Experts</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TravelExpertMVC.styles.css" asp-append-version="true" />
 </head>
 <body class="bg-dark text-white">
     <header>
-        <nav class="navbar navbar-expand-lg bg-primary-custom navbar-dark shadow sticky-top">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-primary-custom navbar-dark sticky-top">
+            <div class="container">
                 <a href="#" class="d-flex align-items-center text-decoration-none">
                     <div class="rounded-circle bg-warning text-center d-flex align-items-center justify-content-center"
                          style="width: 50px; height: 50px">
@@ -29,10 +29,10 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#about-packages">Packages</a>
+                            <a class="nav-link @(ViewData["ActiveSection"]?.ToString() == "Packages" ? "active" : "")" href="#about-packages">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
+                            <a class="nav-link @(ViewData["ActiveSection"]?.ToString() == "Contact" ? "active" : "")" href="#contact">Contact</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
