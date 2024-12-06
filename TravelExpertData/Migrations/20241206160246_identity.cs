@@ -1,11 +1,12 @@
-﻿#nullable disable
-
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace TravelExpertData.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class identity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +38,7 @@ namespace TravelExpertData.Migrations
                     AgncyCountry = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AgncyPhone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AgncyFax = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    is_active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -206,7 +207,7 @@ namespace TravelExpertData.Migrations
                     AgtEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AgtPosition = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     AgencyId = table.Column<int>(type: "int", nullable: true),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    is_active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -295,7 +296,9 @@ namespace TravelExpertData.Migrations
                     CustHomePhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     CustBusPhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CustEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AgentId = table.Column<int>(type: "int", nullable: true)
+                    AgentId = table.Column<int>(type: "int", nullable: true),
+                    Prefs = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    ProfileImg = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -320,7 +323,7 @@ namespace TravelExpertData.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Packages__53E8ED997B14926F", x => x.PackageProductSupplierId);
+                    table.PrimaryKey("PK__Packages__53E8ED99A4B633EA", x => x.PackageProductSupplierId);
                     table.ForeignKey(
                         name: "Packages_Products_Supplie_FK00",
                         column: x => x.PackageId,
@@ -574,7 +577,7 @@ namespace TravelExpertData.Migrations
                 column: "ProductSupplierId");
 
             migrationBuilder.CreateIndex(
-                name: "UQ__Packages__29CA8E95D9D6058F",
+                name: "UQ__Packages__29CA8E9590D3A63F",
                 table: "Packages_Products_Suppliers",
                 columns: new[] { "PackageId", "ProductSupplierId" },
                 unique: true);

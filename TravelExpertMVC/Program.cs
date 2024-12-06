@@ -1,19 +1,25 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TravelExpertData.Data;
+using TravelExpertData.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 var connectionString = builder.Configuration.GetConnectionString("TravelExpertContext") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<TravelExpertContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<TravelExpertContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddIdentity<User, IdentityRole>(
+    options => {
+        options.Password.RequiredUniqueChars = 0;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireUppercase = true;
+    }
+    ).AddEntityFrameworkStores<TravelExpertContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -33,6 +39,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
