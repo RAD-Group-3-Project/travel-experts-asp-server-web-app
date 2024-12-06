@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
@@ -21,9 +20,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         List<Package> packages = PackagesRepository.GetPackages(_context);
-
-        // TODO: Implement the GetAgency method in the AgenciesRepository class
-        List<Agency> agencies = _context.Agencies.Include(a => a.Agents).ToList();
+        List<Agency> agencies = AgencyRepository.GetAgencies(_context);
 
         return View(new HomeViewModel() { Packages = packages, Agencies = agencies });
     }
