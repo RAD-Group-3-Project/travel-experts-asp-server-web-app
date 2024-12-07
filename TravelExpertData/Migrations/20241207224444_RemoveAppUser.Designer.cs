@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelExpertData.Data;
 
@@ -11,9 +12,11 @@ using TravelExpertData.Data;
 namespace TravelExpertData.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    partial class TravelExpertContextModelSnapshot : ModelSnapshot
+    [Migration("20241207224444_RemoveAppUser")]
+    partial class RemoveAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1001,36 +1004,6 @@ namespace TravelExpertData.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c46403a6-318a-4934-aebb-5a813b8c7509",
-                            EmailConfirmed = false,
-                            IsAdmin = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "admin",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "46ac0fe0-4f2a-4b3a-bca0-cd4db7e8dcb7",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "063cce3e-00af-4c07-b8fb-4ad82f74c166",
-                            EmailConfirmed = false,
-                            IsAdmin = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "agent",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "fe2c0667-c2cd-4691-b9e1-a15aa00f798c",
-                            TwoFactorEnabled = false,
-                            UserName = "agent"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
