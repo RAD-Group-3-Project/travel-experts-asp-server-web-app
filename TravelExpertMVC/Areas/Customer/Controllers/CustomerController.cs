@@ -18,7 +18,7 @@ public class CustomerController : Controller
         return View();
     }
 
-    public IActionResult Bookings()
+    public IActionResult Booking()
     {
         return View();
     }
