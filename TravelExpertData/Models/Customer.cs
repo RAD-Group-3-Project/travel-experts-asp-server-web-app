@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace TravelExpertData.Models;
 
@@ -41,6 +43,14 @@ public partial class Customer
     public string CustEmail { get; set; } = null!;
 
     public int? AgentId { get; set; }
+
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? Prefs { get; set; }
+
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? ProfileImg { get; set; }
 
     [ForeignKey("AgentId")]
     [InverseProperty("Customers")]

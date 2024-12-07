@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace TravelExpertData.Models;
 
@@ -30,7 +33,7 @@ public partial class Agency
     public string? AgncyFax { get; set; }
 
     [Column("is_active")]
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
     [InverseProperty("Agency")]
     public virtual ICollection<Agent> Agents { get; set; } = new List<Agent>();
