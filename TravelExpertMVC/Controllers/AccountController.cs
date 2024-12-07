@@ -75,6 +75,7 @@ public class AccountController : Controller
                 CustEmail = newRegistration.Email
             };
             CustomerRepository.AddCustomer(_context, newCustomer);
+            //int id = newCustomer.CustomerId;
             int custId = CustomerRepository.GetLastId(_context); 
             User newUser = new User()
             {
