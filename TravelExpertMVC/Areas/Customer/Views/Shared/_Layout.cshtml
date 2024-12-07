@@ -11,20 +11,20 @@
             <hr class="border border-1 border-dark">
             <ul class="nav nav-pills flex-column mb-auto">
                 <li>
-                    <a class="nav-link text-black active" asp-area="Customer" asp-controller="Customer" asp-action="Dashboard">Dashboard</a>
+                    <a class="nav-link text-black active" asp-area="Customer" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                 </li>
                 <li>
-                    <a class="nav-link text-black" asp-area="Customer" asp-controller="Customer" asp-action="Profile">Profile</a>
+                    <a class="nav-link text-black" asp-area="Customer" asp-controller="Profile" asp-action="Index">Profile</a>
                 </li>
                 <li>
-                    <a class="nav-link text-black" asp-area="Customer" asp-controller="Customer" asp-action="Bookings">My Booking</a>
+                    <a class="nav-link text-black" asp-area="Customer" asp-controller="Booking" asp-action="Index">Booking</a>
                 </li>
                 <li>
-                    <a class="nav-link text-black" asp-area="Customer" asp-controller="Customer" asp-action="Wallet">Wallet</a>
+                    <a class="nav-link text-black" asp-area="Customer" asp-controller="Wallet" asp-action="Index">Wallet</a>
                 </li>
             </ul>
         </div>
-        <div class="col-9 p-5">
+        <div class="col-9 p-5 text-black">
             @RenderBody()
         </div>
     </div>
