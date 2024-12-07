@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-primary-custom navbar-dark sticky-top shadow">
             <div class="container">
-                <a href="#" class="d-flex align-items-center text-decoration-none">
+                <a class="d-flex align-items-center text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">
                     <div class="rounded-circle bg-warning text-center d-flex align-items-center justify-content-center"
                          style="width: 50px; height: 50px">
                         <span class="text-dark fw-bold fs-4">TE</span>
@@ -29,10 +29,10 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewData["ActiveSection"]?.ToString() == "Packages" ? "active" : "")" href="#about-packages">Packages</a>
+                            <a class="nav-link @(ViewData["ActiveSection"]?.ToString() == "Packages" ? "active" : "")" href="/#about-packages">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewData["ActiveSection"]?.ToString() == "Contact" ? "active" : "")" href="#contact">Contact</a>
+                            <a class="nav-link @(ViewData["ActiveSection"]?.ToString() == "Contact" ? "active" : "")" href="/#contact">Contact</a>
                         </li>
                     </ul>
                      <partial name="_LoginPartial" />

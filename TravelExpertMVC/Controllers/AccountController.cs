@@ -30,31 +30,17 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> LoginAsync(LoginViewModel loginModel)
+    public IActionResult Login(string username, string password)
     {
-        if (ModelState.IsValid) // Checks our models validity
+        if (username == "admin" && password == "password")
         {
-            // Authenticates signin 
-            var result = await signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, loginModel.RememberMe, false);
-            // If successful redirect to home 
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            // Otherwise reload the page
-            else
-            {
-                ModelState.AddModelError("", "Invalid Login");
-                return View();
-            }
+            return RedirectToAction("Index", "Home");
         }
-        return View();
-    }
-
-    public IActionResult Register(RegisterViewModel newRegistration )
-    {
-      
-        return View();
+        else
+        {
+            ViewBag.Message = "Invalid username or password";
+            return View();
+        }
     }
     [HttpPost]
     public async Task<IActionResult> RegisterAsync(RegisterViewModel newRegistration)
@@ -92,13 +78,8 @@ public class AccountController : Controller
                 await signInManager.SignInAsync(newUser, false);
                 return RedirectToAction("Index", "Home");
 
-            }
-            foreach (var item in userResult.Errors)
-            {
-                ModelState.AddModelError("", item.Description);
-            }
-
-        }
+    public IActionResult Register()
+    {
         return View();
     }
 
