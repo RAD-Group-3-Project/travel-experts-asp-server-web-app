@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace TravelExpertData.Models;
 
@@ -29,7 +32,7 @@ public partial class Agent
     public int? AgencyId { get; set; }
 
     [Column("is_active")]
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
     [ForeignKey("AgencyId")]
     [InverseProperty("Agents")]

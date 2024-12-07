@@ -1,25 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TravelExpertData.Models;
-
-[Keyless]
-public partial class User
+namespace TravelExpertData.Models
 {
-    [Column("userid")]
-    public int Userid { get; set; }
+    public class User : IdentityUser
+    {
+        public int Id { get; set; }
+        //public string Username { get; set; }
+        //public string Password { get; set; }
 
-    [Column("user_login")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string UserLogin { get; set; } = null!;
+        //[StringLength(100)]
+        //public string Name { get; set; }
+        // Stoes info from customer
+        public int? CustomerId { get; set; }
 
-    [Column("user_password")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string UserPassword { get; set; } = null!;
+        public Customer customers { get; set; }
+        //public Customer Customers { get; set; }
+    }
 
-    [Column("is_admin")]
-    public bool IsAdmin { get; set; }
 }

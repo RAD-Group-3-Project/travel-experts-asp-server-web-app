@@ -9,7 +9,8 @@
         <h2 class="text-center text-primary mb-4" style="color: #002A45;">
             Login
         </h2>
-        <form>
+        <form form asp-action="Login" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="mb-3">
                 <label asp-for="Username" class="form-label" style="color: #002A45;">Email</label>
                 <input asp-for="Username" type="email" class="form-control" placeholder="Enter your email"/>
@@ -19,6 +20,11 @@
                 <label asp-for="Password" class="form-label" style="color: #002A45;">Password</label>
                 <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div>
+                <label class="RememberMe" class="form-check-label" style="color: #002A45;"> @Html.DisplayNameFor(z => z.RememberMe) </label>
+                <input asp-for="RememberMe" class="form-check-input" />
+
             </div>
             <button type="submit" class="btn btn-primary w-100" style="background-color: #FFD358; color: #002A45; border: none;">
                 Login
