@@ -261,13 +261,15 @@ public partial class TravelExpertContext : IdentityDbContext<User>
             {
                 Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 UserName = "admin",
-                PasswordHash = "admin"
+                PasswordHash = "admin",
+                IsAdmin = true,
             },
         new User
         {
             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
             UserName = "agent",
-            PasswordHash = "agent"
+            PasswordHash = "agent",
+            IsAdmin = false,
         }
         );
 
