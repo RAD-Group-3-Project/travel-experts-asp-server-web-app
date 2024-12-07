@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<section class="container bg-white">
+    <div class="d-flex">
+        <div class="col-3 d-flex flex-column flex-shrink-0 border-end p-3">
+            <a href="#" class="nav-link text-black fs-2 fw-bold p-0" aria-current="page">
+                My Account
+            </a>
+            <hr class="border border-1 border-dark">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li>
+                    <a href="#" class="nav-link text-black active">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-black">Profile</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-black">My Trips</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-black">Wallet</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-black">Preferences</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-9 p-5">
+            @RenderBody()
+        </div>
+    </div>
+</section>
