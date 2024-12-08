@@ -55,6 +55,10 @@ public partial class TravelExpertContext : IdentityDbContext<User>
 
     public virtual DbSet<TripType> TripTypes { get; set; }
 
+    public virtual DbSet<Wallet> Wallets { get; set; }
+
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
     //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
     //        => optionsBuilder.UseSqlServer("Data Source=localhost\\sqlexpress;Initial Catalog=TravelExperts;Integrated Security=True; TrustServerCertificate=true");
@@ -254,6 +258,18 @@ public partial class TravelExpertContext : IdentityDbContext<User>
             entity.HasKey(e => e.TripTypeId)
                 .HasName("aaaaaTripTypes_PK")
                 .IsClustered(false);
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.Property(e => e.Amount)
+                .HasColumnType("decimal(18, 2)");
+        });
+
+        modelBuilder.Entity<Wallet>(entity =>
+        {
+            entity.Property(e => e.Balance)
+                .HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<User>().HasData(
