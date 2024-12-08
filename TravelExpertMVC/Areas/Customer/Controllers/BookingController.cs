@@ -30,7 +30,7 @@ public class BookingController : Controller
         int? customerId = user.CustomerId;
         List<Booking> bookingsById = new List<Booking>();
 
-
+        
         if (customerId.HasValue)
         {
             // Call the method with the actual value of customerId

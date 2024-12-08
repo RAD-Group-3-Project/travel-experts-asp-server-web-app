@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,14 @@ namespace TravelExpertData.Repository
 
             return lastCustomerId;
         }
+
+        public static Customer GetCustomerById(TravelExpertContext db, int customerId)
+        {
+            
+            return db.Customers.SingleOrDefault(c => c.CustomerId == customerId);
+        }
+
+
 
     }
 }
