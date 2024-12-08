@@ -12,7 +12,7 @@ using TravelExpertData.Data;
 namespace TravelExpertData.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    [Migration("20241208225918_AddCart")]
+    [Migration("20241208230356_AddCart")]
     partial class AddCart
     {
         /// <inheritdoc />
@@ -409,6 +409,9 @@ namespace TravelExpertData.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -1097,13 +1100,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "14a648f2-f385-4e5b-81eb-27591c87479c",
+                            ConcurrencyStamp = "7220c2b2-33df-45f9-85b3-89d7bbc66742",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "68421911-ced1-4490-8cf4-c8d04db3ef22",
+                            SecurityStamp = "fb2e37a0-6976-441b-8409-63b601e578cb",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1111,13 +1114,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6c78ddfc-ce41-4b91-9143-a962d1edb455",
+                            ConcurrencyStamp = "37aea3bb-b5d6-41cf-9f8c-124e1a393463",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d25f9822-9d2b-4d8d-a37b-556a42f9f2be",
+                            SecurityStamp = "84716d7b-789f-4099-8b00-5207fe314d05",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });

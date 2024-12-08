@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -16,7 +17,8 @@ namespace TravelExpertData.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,14 +67,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "6c78ddfc-ce41-4b91-9143-a962d1edb455", "d25f9822-9d2b-4d8d-a37b-556a42f9f2be" });
+                values: new object[] { "37aea3bb-b5d6-41cf-9f8c-124e1a393463", "84716d7b-789f-4099-8b00-5207fe314d05" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "14a648f2-f385-4e5b-81eb-27591c87479c", "68421911-ced1-4490-8cf4-c8d04db3ef22" });
+                values: new object[] { "7220c2b2-33df-45f9-85b3-89d7bbc66742", "fb2e37a0-6976-441b-8409-63b601e578cb" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
