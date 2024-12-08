@@ -51,9 +51,9 @@ public class AccountController : Controller
         return View();
     }
 
-    public IActionResult Register(RegisterViewModel newRegistration )
+    public IActionResult Register(RegisterViewModel newRegistration)
     {
-      
+
         return View();
     }
     [HttpPost]
@@ -75,7 +75,7 @@ public class AccountController : Controller
                 CustEmail = newRegistration.Email
             };
             CustomerRepository.AddCustomer(_context, newCustomer);
-            int custId = CustomerRepository.GetLastId(_context); 
+            int custId = CustomerRepository.GetLastId(_context);
             User newUser = new User()
             {
                 UserName = newRegistration.Email,

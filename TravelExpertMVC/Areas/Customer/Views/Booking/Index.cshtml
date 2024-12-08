@@ -1,7 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<TravelExpertData.Models.Booking>
 @{
 }
 
-<p>This is the content of Customer's booking</p>
+<h2>Bookings</h2>
+
+@if (Model != null && Model.Any())
+{
+    <ul>
+        @foreach (var booking in Model)
+        {   
+            <li>
+                Booking Id: @booking.BookingId, Booking Date: @booking.BookingDate
+                Package Name : @booking.Package.PkgName, 
+                
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No bookings found.</p>
+}
