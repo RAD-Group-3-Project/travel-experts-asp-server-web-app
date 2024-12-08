@@ -1098,13 +1098,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "628757e4-879f-497c-a2ca-eac8a06d79a0",
+                            ConcurrencyStamp = "f8602901-5936-4024-8626-77df5f65bf98",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d01cba08-6407-4f3c-bd40-1044894ef60a",
+                            SecurityStamp = "cf024159-13d8-40d6-948c-bbbb23a293c7",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1112,13 +1112,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "99c64d6c-99a1-494c-ab92-80e170f978b5",
+                            ConcurrencyStamp = "d38d27fa-7483-4a13-83c1-1d01a8b0d491",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1471c130-2250-45a0-92bb-7bb91eb7c70a",
+                            SecurityStamp = "94fb29e9-152b-4779-8039-542802f05925",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });

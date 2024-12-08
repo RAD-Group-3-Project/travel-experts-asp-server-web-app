@@ -67,14 +67,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "99c64d6c-99a1-494c-ab92-80e170f978b5", "1471c130-2250-45a0-92bb-7bb91eb7c70a" });
+                values: new object[] { "d38d27fa-7483-4a13-83c1-1d01a8b0d491", "94fb29e9-152b-4779-8039-542802f05925" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "628757e4-879f-497c-a2ca-eac8a06d79a0", "d01cba08-6407-4f3c-bd40-1044894ef60a" });
+                values: new object[] { "f8602901-5936-4024-8626-77df5f65bf98", "cf024159-13d8-40d6-948c-bbbb23a293c7" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
