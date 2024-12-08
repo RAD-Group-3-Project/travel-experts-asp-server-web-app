@@ -11,18 +11,18 @@ namespace TravelExpertMVC.Controllers;
 public class PackagesController : Controller
 {
     // Identity object to manage the signin
-    private readonly SignInManager<User> signInManager;
-    private readonly UserManager<User> userManager;
-    // For DB Stufff
-    TravelExpertContext _context;
+    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager;
+
+    // For DB Stuff
+    private readonly TravelExpertContext _context;
 
     // Replaces manager classes and DI's inlandcontext
     public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager, TravelExpertContext context)
     {
-        this.signInManager = signInManager;
-        this.userManager = userManager;
+        _signInManager = signInManager;
+        _userManager = userManager;
         _context = context;
-
     }
 
     // Generate a random booking number 
@@ -65,11 +65,12 @@ public class PackagesController : Controller
 
         return View(newBooking);
     }
+
     [HttpPost]
     public async Task<IActionResult> ReviewBookingAsync(BookingViewModel newBookingViewModel)
     {
         string bookingNo = GenerateRandomBooking();
-        var user = await userManager.GetUserAsync(User);
+        var user = await _userManager.GetUserAsync(User);
         if (ModelState.IsValid) // Checks our models validity
         {
             Booking newBooking = new Booking()
@@ -103,6 +104,4 @@ public class PackagesController : Controller
         // Returns the list
         return list;
     }
-
-
 }
