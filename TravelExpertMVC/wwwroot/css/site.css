@@ -23,22 +23,26 @@ body {
 }
 
 .btn-primary-custom {
-    background-color: #ffd358 !important;
-    color: #002a45 !important;
+    background-color: #ffd358 ;
+    color: #002a45 ;
     border: none;
 }
 
 .btn-primary-custom:hover {
-    background-color: #ffb915 !important;
-    color: #002a45 !important;
+    background-color: #ffb915 ;
+    color: #002a45 ;
 }
 
 .bg-primary-custom {
-    background-color: #002a45 !important;
+    background-color: #002a45 ;
 }
 
 .bg-dark-custom {
-    background-color: #001b2f !important;
+    background-color: #001b2f;
+}
+
+.text-primary-custom {
+    color: #002A45;
 }
 
 .text-accent {

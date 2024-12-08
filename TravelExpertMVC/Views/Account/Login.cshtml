@@ -26,13 +26,13 @@
                 <input asp-for="RememberMe" class="form-check-input" />
 
             </div>
-            <button type="submit" class="btn btn-primary w-100" style="background-color: #FFD358; color: #002A45; border: none;">
+            <button type="submit" class="btn btn-primary-custom w-100 border-0">
                 Login
             </button>
         </form>
         <p class="text-center mt-3" style="color: #003F66;">
             Don't have an account?
-            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-decoration-none" style="color: #FFD358;">Register</a>
+            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-decoration-none text-accent">Register</a>
         </p>
     </div>
 </section>

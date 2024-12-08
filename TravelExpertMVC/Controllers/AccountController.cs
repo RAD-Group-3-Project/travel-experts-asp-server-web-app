@@ -23,6 +23,7 @@ public class AccountController : Controller
         _context = context;
 
     }
+
     public IActionResult Login()
     {
         TempData["IsCustomBg"] = true;
@@ -53,9 +54,10 @@ public class AccountController : Controller
 
     public IActionResult Register(RegisterViewModel newRegistration)
     {
-
+        TempData["IsCustomBg"] = true;
         return View();
     }
+
     [HttpPost]
     public async Task<IActionResult> RegisterAsync(RegisterViewModel newRegistration)
     {
