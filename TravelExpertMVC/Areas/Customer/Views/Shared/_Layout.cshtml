@@ -5,12 +5,11 @@
 <section class="container bg-white">
     <div class="d-flex">
         <div class="col-3 d-flex flex-column flex-shrink-0 border-end p-3">
-            <h2 class="text-black">My Account</h2>
+            <a class="text-decoration-none " asp-area="Customer" asp-controller="Home" asp-action="Index">
+                <h2 class="text-black">My Account</h2>
+            </a>
             <hr class="border border-1 border-dark">
             <ul class="nav nav-pills flex-column mb-auto">
-                <li>
-                    <a class="nav-link text-black @(ViewContext.RouteData.Values["controller"].ToString() == "Dashboard" ? "text-white active" : "")" asp-area="Customer" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                </li>
                 <li>
                     <a class="nav-link text-black @(ViewContext.RouteData.Values["controller"].ToString() == "Profile" ? "text-white active" : "")" asp-area="Customer" asp-controller="Profile" asp-action="Index">Profile</a>
                 </li>

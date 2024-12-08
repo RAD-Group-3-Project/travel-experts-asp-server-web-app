@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TravelExpertData.Models;
 
@@ -22,8 +20,6 @@ public partial class TravelExpertContext : IdentityDbContext<User>
     public virtual DbSet<Agency> Agencies { get; set; }
 
     public virtual DbSet<Agent> Agents { get; set; }
-
-    public virtual DbSet<AppUser> AppUsers { get; set; }
 
     public virtual DbSet<Booking> Bookings { get; set; }
 
@@ -59,9 +55,9 @@ public partial class TravelExpertContext : IdentityDbContext<User>
 
     public virtual DbSet<TripType> TripTypes { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=localhost\\sqlexpress;Initial Catalog=TravelExperts;Integrated Security=True; TrustServerCertificate=true");
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Data Source=localhost\\sqlexpress;Initial Catalog=TravelExperts;Integrated Security=True; TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -83,11 +79,6 @@ public partial class TravelExpertContext : IdentityDbContext<User>
             entity.Property(e => e.IsActive).HasDefaultValue(true);
 
             entity.HasOne(d => d.Agency).WithMany(p => p.Agents).HasConstraintName("FK_Agents_Agencies");
-        });
-
-        modelBuilder.Entity<AppUser>(entity =>
-        {
-            entity.Property(e => e.Userid).ValueGeneratedOnAdd();
         });
 
         modelBuilder.Entity<Booking>(entity =>
@@ -264,6 +255,23 @@ public partial class TravelExpertContext : IdentityDbContext<User>
                 .HasName("aaaaaTripTypes_PK")
                 .IsClustered(false);
         });
+
+        modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
+                UserName = "admin",
+                PasswordHash = "admin",
+                IsAdmin = true,
+            },
+        new User
+        {
+            Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
+            UserName = "agent",
+            PasswordHash = "agent",
+            IsAdmin = false,
+        }
+        );
 
         OnModelCreatingPartial(modelBuilder);
     }
