@@ -30,17 +30,31 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public IActionResult Login(string username, string password)
+    public async Task<IActionResult> LoginAsync(LoginViewModel loginModel)
     {
-        if (username == "admin" && password == "password")
+        if (ModelState.IsValid) // Checks our models validity
         {
-            return RedirectToAction("Index", "Home");
+            // Authenticates signin 
+            var result = await signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, loginModel.RememberMe, false);
+            // If successful redirect to home 
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            // Otherwise reload the page
+            else
+            {
+                ModelState.AddModelError("", "Invalid Login");
+                return View();
+            }
         }
-        else
-        {
-            ViewBag.Message = "Invalid username or password";
-            return View();
-        }
+        return View();
+    }
+
+    public IActionResult Register(RegisterViewModel newRegistration)
+    {
+
+        return View();
     }
     [HttpPost]
     public async Task<IActionResult> RegisterAsync(RegisterViewModel newRegistration)
@@ -61,8 +75,7 @@ public class AccountController : Controller
                 CustEmail = newRegistration.Email
             };
             CustomerRepository.AddCustomer(_context, newCustomer);
-            //int id = newCustomer.CustomerId;
-            int custId = CustomerRepository.GetLastId(_context); 
+            int custId = CustomerRepository.GetLastId(_context);
             User newUser = new User()
             {
                 UserName = newRegistration.Email,
@@ -78,8 +91,13 @@ public class AccountController : Controller
                 await signInManager.SignInAsync(newUser, false);
                 return RedirectToAction("Index", "Home");
 
-    public IActionResult Register()
-    {
+            }
+            foreach (var item in userResult.Errors)
+            {
+                ModelState.AddModelError("", item.Description);
+            }
+
+        }
         return View();
     }
 
