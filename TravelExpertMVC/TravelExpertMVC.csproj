@@ -22,4 +22,8 @@
     <ProjectReference Include="..\TravelExpertData\TravelExpertData.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\profileImages\" />
+  </ItemGroup>
+
 </Project>
