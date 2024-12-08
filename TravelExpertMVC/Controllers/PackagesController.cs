@@ -8,6 +8,7 @@ using TravelExpertData.Repository;
 using TravelExpertMVC.Models;
 
 namespace TravelExpertMVC.Controllers;
+
 public class PackagesController : Controller
 {
     // Identity object to manage the signin
@@ -18,7 +19,8 @@ public class PackagesController : Controller
     private readonly TravelExpertContext _context;
 
     // Replaces manager classes and DI's inlandcontext
-    public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager, TravelExpertContext context)
+    public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager,
+        TravelExpertContext context)
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -79,14 +81,19 @@ public class PackagesController : Controller
                 TripTypeId = newBookingViewModel.TripType,
                 PackageId = newBookingViewModel.PackageID
             };
+
+            // TODO: Redirect to payment page
+
             BookingRepository.AddBooking(_context, newBooking);
             return RedirectToAction("Index", "Home");
 
         }
+
         //Reloads the page if the model is not valid
         ViewBag.List = GetTypes();
         return View();
     }
+
     private List<SelectListItem> GetTypes()
     {
         // get list of genres 
@@ -98,4 +105,18 @@ public class PackagesController : Controller
         // Returns the list
         return list;
     }
+
+    [Authorize]
+    public IActionResult Payment()
+    {
+        return View();
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> PaymentAsync()
+    {
+        return RedirectToAction("Index", "Home");
+    }
+
 }

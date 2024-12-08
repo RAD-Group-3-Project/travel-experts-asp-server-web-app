@@ -1,0 +1,51 @@
+﻿@model TravelExpertMVC.Models.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="container">
+    <div class="bg-white text-black p-4">
+        <div class="row">
+            <div class="col-md-9">
+                <h2>Booking Detail</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Travellers</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.BookingDetail.PackageName</td>
+                            <td>@Model.BookingDetail.Description</td>
+                            <td>@Model.BookingDetail.Travellers</td>
+                            <td>@Model.BookingDetail.BasePrice</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger">×</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a asp-controller="Packages" asp-action="ReviewBooking" class="text-primary">&larr; Continue Shopping</a>
+            </div>
+            <div class="col-md-3">
+                <div class="border p-3 rounded bg-light">
+                    <h4>Payment Summary</h4>
+                    <p class="mb-2"><strong>Subtotal:</strong> @Model.BookingDetail.BasePrice</p>
+                    <p class="mb-2"><strong>Tax:</strong> 0</p>
+                    <p class="mb-3"><strong>Shipping:</strong> Free</p>
+                    <hr>
+                    <p class="mb-4"><strong>Total:</strong> 0</p>
+
+                    <button class="btn btn-primary w-100 mb-2">Pay with Wallet</button>
+                    <button class="btn btn-secondary w-100">Other Payment Methods</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
