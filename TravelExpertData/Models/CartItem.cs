@@ -1,4 +1,5 @@
-﻿namespace TravelExpertData.Models;
+﻿
+namespace TravelExpertData.Models;
 public class CartItem
 {
     public int Id { get; set; }
@@ -7,7 +8,7 @@ public class CartItem
     public int PackageId { get; set; }
     public virtual Package Package { get; set; }
     public int Traveller { get; set; }
-    public int TripTypeId { get; set; }
+    public string TripTypeId { get; set; }
     public decimal Price { get; set; }
     public decimal Tax { get; set; }
     public decimal Total { get; set; }

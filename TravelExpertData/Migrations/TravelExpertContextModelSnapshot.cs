@@ -446,8 +446,9 @@ namespace TravelExpertData.Migrations
                     b.Property<int>("Traveller")
                         .HasColumnType("int");
 
-                    b.Property<int>("TripTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("TripTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1097,13 +1098,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7220c2b2-33df-45f9-85b3-89d7bbc66742",
+                            ConcurrencyStamp = "628757e4-879f-497c-a2ca-eac8a06d79a0",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fb2e37a0-6976-441b-8409-63b601e578cb",
+                            SecurityStamp = "d01cba08-6407-4f3c-bd40-1044894ef60a",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1111,13 +1112,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37aea3bb-b5d6-41cf-9f8c-124e1a393463",
+                            ConcurrencyStamp = "99c64d6c-99a1-494c-ab92-80e170f978b5",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "84716d7b-789f-4099-8b00-5207fe314d05",
+                            SecurityStamp = "1471c130-2250-45a0-92bb-7bb91eb7c70a",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });
