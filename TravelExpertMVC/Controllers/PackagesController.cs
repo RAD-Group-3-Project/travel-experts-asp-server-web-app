@@ -55,13 +55,10 @@ public class PackagesController : Controller
             BasePrice = package.PkgBasePrice,
             Travellers = 0,
             TripType = "A",
-
         };
-
 
         // Pass the list to the View using ViewBag
         ViewBag.List = GetTypes();
-
 
         return View(newBooking);
     }
@@ -81,9 +78,6 @@ public class PackagesController : Controller
                 CustomerId = user.CustomerId,
                 TripTypeId = newBookingViewModel.TripType,
                 PackageId = newBookingViewModel.PackageID
-
-
-
             };
             BookingRepository.AddBooking(_context, newBooking);
             return RedirectToAction("Index", "Home");
