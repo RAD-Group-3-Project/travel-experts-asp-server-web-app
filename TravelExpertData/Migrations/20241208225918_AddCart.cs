@@ -38,6 +38,7 @@ namespace TravelExpertData.Migrations
                     CartId = table.Column<int>(type: "int", nullable: false),
                     PackageId = table.Column<int>(type: "int", nullable: false),
                     Traveller = table.Column<int>(type: "int", nullable: false),
+                    TripTypeId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
@@ -64,14 +65,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "f7a41c16-a889-498d-a8e7-e24c8bedb57c", "383330b8-db37-47e3-b655-03eaa5ddd9cf" });
+                values: new object[] { "6c78ddfc-ce41-4b91-9143-a962d1edb455", "d25f9822-9d2b-4d8d-a37b-556a42f9f2be" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "566059dc-d8b1-4254-889e-e5dcb7d25d41", "57ff8604-e6a8-44fd-a4ad-73d4026e9221" });
+                values: new object[] { "14a648f2-f385-4e5b-81eb-27591c87479c", "68421911-ced1-4490-8cf4-c8d04db3ef22" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
