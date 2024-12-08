@@ -11,62 +11,62 @@
             <form asp-action="Register" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                 <div class="mb-3">
                     <label asp-for="FirstName" class="form-label"> </label>
-                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name"/>
+                    <input asp-for="FirstName" class="form-control" type="text" placeholder="Enter your first name"/>
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="LastName" class="form-label"> </label>
-                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name"/>
+                    <input asp-for="LastName" class="form-control" type="text" placeholder="Enter your last name" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Email" class="form-label"> </label>
-                    <input asp-for="Email" class="form-control" placeholder="Enter your email"/>
+                    <input asp-for="Email" class="form-control" type="email" placeholder="Enter your email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="HomePhone" class="form-label"> </label>
-                    <input asp-for="HomePhone" class="form-control" placeholder="Enter your home phone"/>
+                    <input asp-for="HomePhone" class="form-control" type="tel" placeholder="Enter your home phone" />
                     <span asp-validation-for="HomePhone" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="BusPhone" class="form-label"> </label>
-                    <input asp-for="BusPhone" class="form-control" placeholder="Enter your business phone"/>
+                    <input asp-for="BusPhone" class="form-control" type="tel" placeholder="Enter your business phone" />
                     <span asp-validation-for="BusPhone" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Address" class="form-label"> </label>
-                    <input asp-for="Address" class="form-control" placeholder="Enter your address"/>
+                    <input asp-for="Address" class="form-control" type="text" placeholder="Enter your address" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="City" class="form-label"> </label>
-                    <input asp-for="City" class="form-control" placeholder="Enter your city"/>
+                    <input asp-for="City" class="form-control" type="text" placeholder="Enter your city" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Prov" class="form-label"> </label>
-                    <input asp-for="Prov" class="form-control" placeholder="Enter your province"/>
+                    <input asp-for="Prov" class="form-control" type="text" placeholder="Enter your province" />
                     <span asp-validation-for="Prov" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Postal" class="form-label"> </label>
-                    <input asp-for="Postal" class="form-control" placeholder="Enter your postal code"/>
+                    <input asp-for="Postal" class="form-control" type="text" placeholder="Enter your postal code" />
                     <span asp-validation-for="Postal" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Country" class="form-label"> </label>
-                    <input asp-for="Country" class="form-control" placeholder="Enter your country"/>
+                    <input asp-for="Country" class="form-control" type="text" placeholder="Enter your country" />
                     <span asp-validation-for="Country" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Password" class="form-label"> </label>
-                    <input asp-for="Password" class="form-control" placeholder="Enter your password"/>
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="mb-4">
                     <label asp-for="ConfirmPassword" class="form-label"> </label>
-                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password"/>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm your password" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-primary-custom w-100 border-0 fs-6">
