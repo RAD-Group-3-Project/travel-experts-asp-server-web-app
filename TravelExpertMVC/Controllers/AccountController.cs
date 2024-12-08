@@ -23,6 +23,7 @@ public class AccountController : Controller
         _context = context;
 
     }
+
     public IActionResult Login()
     {
         TempData["IsCustomBg"] = true;
@@ -51,11 +52,12 @@ public class AccountController : Controller
         return View();
     }
 
-    public IActionResult Register(RegisterViewModel newRegistration )
+    public IActionResult Register(RegisterViewModel newRegistration)
     {
-      
+        TempData["IsCustomBg"] = true;
         return View();
     }
+
     [HttpPost]
     public async Task<IActionResult> RegisterAsync(RegisterViewModel newRegistration)
     {
@@ -75,7 +77,7 @@ public class AccountController : Controller
                 CustEmail = newRegistration.Email
             };
             CustomerRepository.AddCustomer(_context, newCustomer);
-            int custId = CustomerRepository.GetLastId(_context); 
+            int custId = CustomerRepository.GetLastId(_context);
             User newUser = new User()
             {
                 UserName = newRegistration.Email,

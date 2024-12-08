@@ -1,85 +1,82 @@
 ﻿@model TravelExpertMVC.Models.RegisterViewModel
 
 @{
-
+    ViewData["Title"] = "Register";
 }
-<h2>Register</h2>
-<form asp-action="Register" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
-    <div asp-validation-summary="All" class="text-danger"></div>
 
-
-
-  
-    <div>
-        <label asp-for="FirstName" class="control-label"> </label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="LastName" class="control-label"> </label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="Email" class="control-label"> </label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="HomePhone" class="control-label"> </label>
-        <input asp-for="HomePhone" class="form-control" />
-        <span asp-validation-for="HomePhone" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="BusPhone" class="control-label"> </label>
-        <input asp-for="BusPhone" class="form-control" />
-        <span asp-validation-for="BusPhone" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="Address" class="control-label"> </label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="City" class="control-label"> </label>
-        <input asp-for="City" class="form-control" />
-        <span asp-validation-for="Password" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="Prov" class="control-label"> </label>
-        <input asp-for="Prov" class="form-control" />
-        <span asp-validation-for="Prov" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="Postal" class="control-label"> </label>
-        <input asp-for="Postal" class="form-control" />
-        <span asp-validation-for="Postal" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="Country" class="control-label"> </label>
-        <input asp-for="Country" class="form-control" />
-        <span asp-validation-for="Country" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="Password" class="control-label"> </label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="ConfirmPassword" class="text-dnager"></span>
-    </div>
-    <div>
-        <label asp-for="ConfirmPassword" class="control-label"> </label>
-        <input asp-for="ConfirmPassword" class="form-control" />
-        <span asp-validation-for="ConfirmPassword" class="text-dnager"></span>
-    </div>
-
-
-
-
-    <div class="Row">
-        <div>
-            <a asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]">Already a member? Click here.</a>
-        </div>
-        <div>
-            <input type="submit" value="Register" class="btn btn-primary" />
+<div class="container ">
+    <div class="min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="bg-white text-black rounded shadow p-4 p-md-5 w-100" style="max-width: 500px;">
+            <h2 class="text-center text-primary mb-4">Register</h2>
+            <form asp-action="Register" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label"> </label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name"/>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label"> </label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name"/>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"> </label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HomePhone" class="form-label"> </label>
+                    <input asp-for="HomePhone" class="form-control" placeholder="Enter your home phone"/>
+                    <span asp-validation-for="HomePhone" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="BusPhone" class="form-label"> </label>
+                    <input asp-for="BusPhone" class="form-control" placeholder="Enter your business phone"/>
+                    <span asp-validation-for="BusPhone" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Address" class="form-label"> </label>
+                    <input asp-for="Address" class="form-control" placeholder="Enter your address"/>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="City" class="form-label"> </label>
+                    <input asp-for="City" class="form-control" placeholder="Enter your city"/>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Prov" class="form-label"> </label>
+                    <input asp-for="Prov" class="form-control" placeholder="Enter your province"/>
+                    <span asp-validation-for="Prov" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Postal" class="form-label"> </label>
+                    <input asp-for="Postal" class="form-control" placeholder="Enter your postal code"/>
+                    <span asp-validation-for="Postal" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Country" class="form-label"> </label>
+                    <input asp-for="Country" class="form-control" placeholder="Enter your country"/>
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"> </label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter your password"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="ConfirmPassword" class="form-label"> </label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 border-0 fs-6">
+                    Register
+                </button>
+            </form>
+            <p class="text-center mt-4">
+                Already have an account?
+                <a asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="text-decoration-none text-accent">Login</a>
+            </p>
         </div>
     </div>
-</form>
+</div>
