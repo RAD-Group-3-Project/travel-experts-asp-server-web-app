@@ -152,6 +152,8 @@ public class PackagesController : Controller
             return RedirectToAction("Login", "Account");
         }
 
+        ViewBag.InsufficientFund = false;
+
         // get pending cart
         Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
         if (cart == null)
