@@ -99,6 +99,7 @@ public class PackagesController : Controller
                 cart = new Cart()
                 {
                     CustomerId = (int)user.CustomerId,
+                    Status = CartStatus.Pending,
                     CreatedAt = DateTime.Now,
                 };
                 // create a new list of cart items
