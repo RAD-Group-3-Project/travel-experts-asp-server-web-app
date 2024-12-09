@@ -9,4 +9,9 @@ public static class TransactionRepository
         dbContext.Transactions.Add(transaction);
         dbContext.SaveChanges();
     }
+
+    public static List<Transaction> GetTransactions(TravelExpertContext dbContext, Guid walletId)
+    {
+        return dbContext.Transactions.Where(t => t.WalletId == walletId).ToList();
+    }
 }
