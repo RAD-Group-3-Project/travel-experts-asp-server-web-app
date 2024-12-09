@@ -25,4 +25,12 @@ public class CartRepository
         dbContext.Carts.Remove(cart);
         dbContext.SaveChanges();
     }
+
+    public static Cart? GetPendingCart(TravelExpertContext dbContext, int customerId)
+    {
+        return dbContext.Carts
+            .Include(c => c.CartItems)
+            .ThenInclude(ci => ci.Package)
+            .FirstOrDefault(c => c.CustomerId == customerId && c.Status == CartStatus.Pending);
+    }
 }
