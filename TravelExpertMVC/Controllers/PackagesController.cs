@@ -68,20 +68,9 @@ public class PackagesController : Controller
     [HttpPost]
     public async Task<IActionResult> ReviewBookingAsync(BookingViewModel newBookingViewModel)
     {
-        string bookingNo = GenerateRandomBooking();
         var user = await _userManager.GetUserAsync(User);
         if (ModelState.IsValid) // Checks our models validity
         {
-            //Booking newBooking = new Booking()
-            //{
-            //    BookingDate = DateTime.Now,
-            //    BookingNo = bookingNo,
-            //    TravelerCount = newBookingViewModel.Travellers,
-            //    CustomerId = user.CustomerId,
-            //    TripTypeId = newBookingViewModel.TripType,
-            //    PackageId = newBookingViewModel.PackageID
-            //};
-
             // find the pending cart for the user
             Cart? pendingCart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
             List<CartItem> cartItems;
@@ -123,7 +112,8 @@ public class PackagesController : Controller
                 subTotal += item.Price;
             }
             cart.SubTotal = subTotal;
-            cart.Total = subTotal + CalculateGST(subTotal);
+            cart.Tax = CalculateGST(subTotal);
+            cart.Total = cart.SubTotal + cart.Tax;
             CartRepository.AddCart(_context, cart);
 
             // Add the cart items to the database
@@ -161,8 +151,13 @@ public class PackagesController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        // get Cart detail
-        Cart cart = CartRepository.GetCart(_context, (int)user.CustomerId);
+        // get pending cart
+        Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+        if (cart == null)
+        {
+            return View(new PaymentViewModel() { Cart = new Cart(), CartItems = new List<CartItem>() });
+        }
+
         // get CartItem detail
         List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
 
@@ -171,15 +166,67 @@ public class PackagesController : Controller
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> PaymentAsync()
+    public async Task<IActionResult> PaymentAsync(int CardId)
     {
-        //BookingRepository.AddBooking(_context, newBooking);
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        // get Cart detail
+        Cart cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+        // get CartItem detail
+        List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
+
+        foreach (CartItem item in cartItems)
+        {
+            // Create a new booking
+            Booking newBooking = new Booking()
+            {
+                BookingDate = DateTime.Now,
+                BookingNo = GenerateRandomBooking(),
+                TravelerCount = item.Traveller,
+                CustomerId = user.CustomerId,
+                TripTypeId = item.TripTypeId,
+                PackageId = item.PackageId
+            };
+            BookingRepository.AddBooking(_context, newBooking);
+
+            // find the product_supplier_id
+            List<PackagesProductsSupplier> ppsList = PackageProductSupplierRepository.GetPackagesProductsSupplierByPackageId(_context, item.PackageId);
+
+            foreach (PackagesProductsSupplier pps in ppsList)
+            {
+                if (pps.IsActive == true)
+                {
+                    // Create booking Detail
+                    BookingDetail newBookingDetail = new BookingDetail()
+                    {
+                        ItineraryNo = cartItems.IndexOf(item) + 1,
+                        TripStart = item.Package.PkgStartDate,
+                        TripEnd = item.Package.PkgEndDate,
+                        Description = item.Package.PkgDesc,
+                        BasePrice = item.Price,
+                        AgencyCommission = 0,
+                        BookingId = newBooking.BookingId,
+                        ProductSupplierId = pps.ProductSupplierId,
+                    };
+                    BookingDetailRepository.AddBookingDetail(_context, newBookingDetail);
+                }
+            }
+
+            // Update the cart status
+            cart.Status = CartStatus.Completed;
+            CartRepository.UpdateCart(_context, cart);
+        }
+
         return RedirectToAction("Index", "Home");
     }
+
     private decimal CalculateGST(decimal basePrice)
     {
         const decimal GST_RATE = 0.05m;
         return basePrice * GST_RATE;
     }
-
 }

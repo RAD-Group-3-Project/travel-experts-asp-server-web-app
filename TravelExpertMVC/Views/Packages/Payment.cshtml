@@ -45,7 +45,10 @@
                     <hr>
                     <p class="mb-4"><strong>Total:</strong> @Model.Cart.Total.ToString("C2")</p>
 
-                    <button class="btn btn-primary w-100 mb-2">Pay with Wallet</button>
+                    <form asp-action="Payment" method="post">
+                        <input type="hidden" asp-for="Cart.Id" value="@Model.Cart.Id" />
+                        <button class="btn btn-primary-custom w-100 mb-2">Pay with Wallet</button>
+                    </form>
                     <button class="btn btn-secondary w-100">Other Payment Methods</button>
                 </div>
             </div>

@@ -33,4 +33,10 @@ public class CartRepository
             .ThenInclude(ci => ci.Package)
             .FirstOrDefault(c => c.CustomerId == customerId && c.Status == CartStatus.Pending);
     }
+
+    public static void UpdateCart(TravelExpertContext dbContext, Cart cart)
+    {
+        dbContext.Carts.Update(cart);
+        dbContext.SaveChanges();
+    }
 }
