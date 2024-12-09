@@ -242,6 +242,34 @@ public class PackagesController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> RemoveItemAsync(int cartItemId, int cartId)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        CartItemRepository.RemoveCartItem(_context, cartItemId);
+
+        // update subtotal, tax, and total
+        Cart? cart = CartRepository.GetCartById(_context, cartId);
+        if (cart == null)
+        {
+            Debug.WriteLine($"Can't find cart with cart id: {cartId}");
+            return RedirectToAction("Index", "Home");
+        }
+
+        cart.SubTotal = cart.CartItems.Sum(ci => ci.Price);
+        cart.Tax = CalculateGST(cart.SubTotal);
+        cart.Total = cart.SubTotal + cart.Tax;
+        CartRepository.UpdateCart(_context, cart);
+
+        return RedirectToAction("Payment", "Packages");
+    }
+
     private decimal CalculateGST(decimal basePrice)
     {
         const decimal GST_RATE = 0.05m;

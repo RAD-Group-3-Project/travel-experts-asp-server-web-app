@@ -33,7 +33,11 @@
                             <td>@cartItem.Traveller</td>
                                 <td>@cartItem.Price.ToString("C2")</td>
                             <td>
-                                <button class="btn btn-sm btn-danger">×</button>
+                                <form asp-action="RemoveItem" method="post">
+                                    <input type="hidden" name="cartItemId" value="@cartItem.Id" />
+                                    <input type="hidden" name="cartId" value="@Model.Cart.Id" />
+                                    <button class="btn btn-sm btn-danger">×</button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>

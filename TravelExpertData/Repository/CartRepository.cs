@@ -5,7 +5,15 @@ using TravelExpertData.Models;
 namespace TravelExpertData.Repository;
 public class CartRepository
 {
-    public static Cart GetCart(TravelExpertContext dbContext, int customerId)
+    public static Cart? GetCartById(TravelExpertContext dbContext, int cartId)
+    {
+        return dbContext.Carts
+            .Include(c => c.CartItems)
+            .ThenInclude(ci => ci.Package)
+            .FirstOrDefault(c => c.Id == cartId);
+    }
+
+    public static Cart? GetCartByCustomerId(TravelExpertContext dbContext, int customerId)
     {
         return dbContext.Carts
             .Include(c => c.CartItems)
