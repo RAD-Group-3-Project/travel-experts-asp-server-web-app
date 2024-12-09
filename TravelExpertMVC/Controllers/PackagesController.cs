@@ -196,6 +196,7 @@ public class PackagesController : Controller
         }
 
         // deduct the amount from the wallet
+        ViewBag.InsufficientFund = false;
         wallet.Balance -= cart.Total;
         WalletRepository.UpdateWallet(_context, wallet);
 
