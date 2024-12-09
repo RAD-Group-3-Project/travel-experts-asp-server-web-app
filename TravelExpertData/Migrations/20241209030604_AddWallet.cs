@@ -15,8 +15,7 @@ namespace TravelExpertData.Migrations
                 name: "Wallets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -36,9 +35,8 @@ namespace TravelExpertData.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    TransactionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WalletId = table.Column<int>(type: "int", nullable: false),
+                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WalletId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TransactionType = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -60,14 +58,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "72c6e5ac-cf74-46e9-b7de-87f372744bae", "0ac98df9-612d-4597-8a59-27ab926f8b14" });
+                values: new object[] { "19a7b834-26b5-4664-8631-75ecc631fae0", "30a3541c-4e55-4429-8dcb-0d7c03e7e1be" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "a5f52499-b2b6-4d01-b7e4-3ab393696663", "7326c651-481d-4931-8b39-7538f496046f" });
+                values: new object[] { "e4e452cd-972b-406e-be5a-d67a9ac2686a", "e8f093ad-91ef-4170-b9a9-5d80f56ec2cb" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_WalletId",

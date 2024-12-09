@@ -12,8 +12,8 @@ using TravelExpertData.Data;
 namespace TravelExpertData.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    [Migration("20241209003616_AddCart")]
-    partial class AddCart
+    [Migration("20241209030604_AddWallet")]
+    partial class AddWallet
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -400,72 +400,6 @@ namespace TravelExpertData.Migrations
                     b.HasIndex(new[] { "ProductSupplierId" }, "Products_SuppliersBookingDetails");
 
                     b.ToTable("BookingDetails");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PackageId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("Traveller")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TripTypeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("PackageId");
-
-                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Class", b =>
@@ -982,11 +916,9 @@ namespace TravelExpertData.Migrations
 
             modelBuilder.Entity("TravelExpertData.Models.Transaction", b =>
                 {
-                    b.Property<int>("TransactionId")
+                    b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
@@ -1001,8 +933,8 @@ namespace TravelExpertData.Migrations
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
-                    b.Property<int>("WalletId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("WalletId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TransactionId");
 
@@ -1107,13 +1039,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0387ab53-8c59-4e64-8d6a-24ceb9b88d9c",
+                            ConcurrencyStamp = "e4e452cd-972b-406e-be5a-d67a9ac2686a",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "23dd7aa8-e3e9-4d56-bf9e-544331bc8bf5",
+                            SecurityStamp = "e8f093ad-91ef-4170-b9a9-5d80f56ec2cb",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1121,13 +1053,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7cccd8c-088b-43b5-ad8e-ff3f5c9a0926",
+                            ConcurrencyStamp = "19a7b834-26b5-4664-8631-75ecc631fae0",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "19222007-ad53-48b1-a190-db601f32e228",
+                            SecurityStamp = "30a3541c-4e55-4429-8dcb-0d7c03e7e1be",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });
@@ -1135,11 +1067,9 @@ namespace TravelExpertData.Migrations
 
             modelBuilder.Entity("TravelExpertData.Models.Wallet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18, 2)");
@@ -1278,36 +1208,6 @@ namespace TravelExpertData.Migrations
                     b.Navigation("ProductSupplier");
 
                     b.Navigation("Region");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
-                {
-                    b.HasOne("TravelExpertData.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.CartItem", b =>
-                {
-                    b.HasOne("TravelExpertData.Models.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelExpertData.Models.Package", "Package")
-                        .WithMany()
-                        .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Package");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.CreditCard", b =>
@@ -1452,11 +1352,6 @@ namespace TravelExpertData.Migrations
             modelBuilder.Entity("TravelExpertData.Models.Booking", b =>
                 {
                     b.Navigation("BookingDetails");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Class", b =>

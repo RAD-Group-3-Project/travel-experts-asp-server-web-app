@@ -174,7 +174,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("AffilitationId"), false);
 
-                    b.ToTable("Affiliations", (string)null);
+                    b.ToTable("Affiliations");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Agency", b =>
@@ -221,7 +221,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasKey("AgencyId");
 
-                    b.ToTable("Agencies", (string)null);
+                    b.ToTable("Agencies");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Agent", b =>
@@ -269,7 +269,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex("AgencyId");
 
-                    b.ToTable("Agents", (string)null);
+                    b.ToTable("Agents");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Booking", b =>
@@ -317,7 +317,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "TripTypeId" }, "TripTypesBookings");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.BookingDetail", b =>
@@ -396,7 +396,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "ProductSupplierId" }, "Products_SuppliersBookingDetails");
 
-                    b.ToTable("BookingDetails", (string)null);
+                    b.ToTable("BookingDetails");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
@@ -429,7 +429,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.CartItem", b =>
@@ -462,7 +462,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Class", b =>
@@ -485,7 +485,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("ClassId"), false);
 
-                    b.ToTable("Classes", (string)null);
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.CreditCard", b =>
@@ -522,7 +522,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "CustomerId" }, "CustomersCreditCards");
 
-                    b.ToTable("CreditCards", (string)null);
+                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Customer", b =>
@@ -601,7 +601,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "AgentId" }, "EmployeesCustomers");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.CustomersReward", b =>
@@ -626,7 +626,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "RewardId" }, "RewardsCustomers_Rewards");
 
-                    b.ToTable("Customers_Rewards", (string)null);
+                    b.ToTable("Customers_Rewards");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Employee", b =>
@@ -660,7 +660,7 @@ namespace TravelExpertData.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Fee", b =>
@@ -686,7 +686,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("FeeId"), false);
 
-                    b.ToTable("Fees", (string)null);
+                    b.ToTable("Fees");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Package", b =>
@@ -731,7 +731,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("PackageId"), false);
 
-                    b.ToTable("Packages", (string)null);
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.PackagesProductsSupplier", b =>
@@ -766,7 +766,7 @@ namespace TravelExpertData.Migrations
                     b.HasIndex(new[] { "PackageId", "ProductSupplierId" }, "UQ__Packages__29CA8E9590D3A63F")
                         .IsUnique();
 
-                    b.ToTable("Packages_Products_Suppliers", (string)null);
+                    b.ToTable("Packages_Products_Suppliers");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Product", b =>
@@ -795,7 +795,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "ProductId" }, "ProductId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.ProductsSupplier", b =>
@@ -829,7 +829,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "SupplierId" }, "SuppliersProducts_Suppliers1");
 
-                    b.ToTable("Products_Suppliers", (string)null);
+                    b.ToTable("Products_Suppliers");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Region", b =>
@@ -847,7 +847,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("RegionId"), false);
 
-                    b.ToTable("Regions", (string)null);
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Reward", b =>
@@ -871,7 +871,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("RewardId"), false);
 
-                    b.ToTable("Rewards", (string)null);
+                    b.ToTable("Rewards");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Supplier", b =>
@@ -899,7 +899,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "SupplierId" }, "SupplierId");
 
-                    b.ToTable("Suppliers", (string)null);
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.SupplierContact", b =>
@@ -974,16 +974,14 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex(new[] { "SupplierId" }, "SuppliersSupCon");
 
-                    b.ToTable("SupplierContacts", (string)null);
+                    b.ToTable("SupplierContacts");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Transaction", b =>
                 {
-                    b.Property<int>("TransactionId")
+                    b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
@@ -998,14 +996,14 @@ namespace TravelExpertData.Migrations
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
-                    b.Property<int>("WalletId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("WalletId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TransactionId");
 
                     b.HasIndex("WalletId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.TripType", b =>
@@ -1024,7 +1022,7 @@ namespace TravelExpertData.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("TripTypeId"), false);
 
-                    b.ToTable("TripTypes", (string)null);
+                    b.ToTable("TripTypes");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.User", b =>
@@ -1104,13 +1102,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0387ab53-8c59-4e64-8d6a-24ceb9b88d9c",
+                            ConcurrencyStamp = "14746f66-3d07-4489-9c87-2b412fdd304f",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "23dd7aa8-e3e9-4d56-bf9e-544331bc8bf5",
+                            SecurityStamp = "9b7da68d-50dd-4785-ab5c-5208f30abdd7",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1118,13 +1116,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7cccd8c-088b-43b5-ad8e-ff3f5c9a0926",
+                            ConcurrencyStamp = "859202c3-4152-490e-add5-80f3cafb4d90",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "19222007-ad53-48b1-a190-db601f32e228",
+                            SecurityStamp = "ba256e4a-b094-4631-b322-c4793e912b87",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });
@@ -1132,11 +1130,9 @@ namespace TravelExpertData.Migrations
 
             modelBuilder.Entity("TravelExpertData.Models.Wallet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18, 2)");
@@ -1151,7 +1147,7 @@ namespace TravelExpertData.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Wallets", (string)null);
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

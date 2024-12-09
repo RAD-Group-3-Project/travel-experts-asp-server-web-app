@@ -69,14 +69,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "c7cccd8c-088b-43b5-ad8e-ff3f5c9a0926", "19222007-ad53-48b1-a190-db601f32e228" });
+                values: new object[] { "859202c3-4152-490e-add5-80f3cafb4d90", "ba256e4a-b094-4631-b322-c4793e912b87" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "0387ab53-8c59-4e64-8d6a-24ceb9b88d9c", "23dd7aa8-e3e9-4d56-bf9e-544331bc8bf5" });
+                values: new object[] { "14746f66-3d07-4489-9c87-2b412fdd304f", "9b7da68d-50dd-4785-ab5c-5208f30abdd7" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
@@ -108,14 +108,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "72c6e5ac-cf74-46e9-b7de-87f372744bae", "0ac98df9-612d-4597-8a59-27ab926f8b14" });
+                values: new object[] { "19a7b834-26b5-4664-8631-75ecc631fae0", "30a3541c-4e55-4429-8dcb-0d7c03e7e1be" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "a5f52499-b2b6-4d01-b7e4-3ab393696663", "7326c651-481d-4931-8b39-7538f496046f" });
+                values: new object[] { "e4e452cd-972b-406e-be5a-d67a9ac2686a", "e8f093ad-91ef-4170-b9a9-5d80f56ec2cb" });
         }
     }
 }

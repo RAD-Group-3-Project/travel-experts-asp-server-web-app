@@ -1,8 +1,13 @@
-﻿namespace TravelExpertData.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TravelExpertData.Models;
 public class Transaction
 {
-    public int TransactionId { get; set; }
-    public int WalletId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid TransactionId { get; set; }
+    public Guid WalletId { get; set; }
     public TransactionType TransactionType { get; set; }
     public Decimal Amount { get; set; }
     public string Description { get; set; }
