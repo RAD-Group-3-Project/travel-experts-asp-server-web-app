@@ -13,9 +13,17 @@ public class CartRepository
             .FirstOrDefault(c => c.CustomerId == customerId);
     }
 
-    public static void AddCart(TravelExpertContext dbContext, Cart cart)
+    public static void AddOrUpdateCart(TravelExpertContext dbContext, Cart cart)
     {
-        dbContext.Carts.Add(cart);
+        var existingCart = dbContext.Carts.Find(cart.Id);
+        if (existingCart == null)
+        {
+            dbContext.Carts.Add(cart);
+        }
+        else
+        {
+            dbContext.Carts.Update(cart);
+        }
         dbContext.SaveChanges();
     }
 

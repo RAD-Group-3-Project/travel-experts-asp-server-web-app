@@ -74,14 +74,11 @@ public class PackagesController : Controller
         {
             // find the pending cart for the user
             Cart? pendingCart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
-            List<CartItem> cartItems;
             Cart cart;
             if (pendingCart != null)
             {
                 // use the pending cart
                 cart = pendingCart;
-                // get the cart item
-                cartItems = CartItemRepository.GetCartItems(_context, pendingCart.Id);
             }
             else
             {
@@ -92,8 +89,6 @@ public class PackagesController : Controller
                     Status = CartStatus.Pending,
                     CreatedAt = DateTime.Now,
                 };
-                // create a new list of cart items
-                cartItems = new List<CartItem>();
             }
 
             CartItem cartItem = new CartItem()
@@ -104,24 +99,12 @@ public class PackagesController : Controller
                 TripTypeId = newBookingViewModel.TripType,
                 Price = newBookingViewModel.BasePrice,
             };
-            cartItems.Add(cartItem);
 
-            // Calculate the subtotal and total price
-            decimal subTotal = 0;
-            foreach (var item in cartItems)
-            {
-                subTotal += item.Price;
-            }
-            cart.SubTotal = subTotal;
-            cart.Tax = CalculateGST(subTotal);
+            cart.SubTotal += cartItem.Price;
+            cart.Tax = CalculateGST(cart.SubTotal);
             cart.Total = cart.SubTotal + cart.Tax;
-            CartRepository.AddCart(_context, cart);
-
-            // Add the cart items to the database
-            foreach (var item in cartItems)
-            {
-                CartItemRepository.AddCartItem(_context, item);
-            }
+            CartRepository.AddOrUpdateCart(_context, cart);
+            CartItemRepository.AddCartItem(_context, cartItem);
 
             return RedirectToAction("Payment", "Packages");
         }
