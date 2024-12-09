@@ -4,72 +4,74 @@
     // ViewData["Title"] = "ReviewBooking";
 }
 
-<h1>ReviewBooking</h1>
+<div class="container">
+    <h1>ReviewBooking</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ReviewBooking" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="ReviewBooking" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="PackageID" class="control-label"></label>
-                <p class="form-control-plaintext" style="color: white;">@Model.PackageID</p>
-                <input type="hidden" asp-for="PackageID" value="@Model.PackageID" />
-                <span asp-validation-for="PackageID" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="PackageID" class="control-label"></label>
+                    <p class="form-control-plaintext" style="color: white;">@Model.PackageID</p>
+                    <input type="hidden" asp-for="PackageID" value="@Model.PackageID" />
+                    <span asp-validation-for="PackageID" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="PackageName" class="control-label"></label>
-                <p class="form-control-plaintext" style="color: white;">@Model.PackageName</p>
-                <input type="hidden" asp-for="PackageName" value="@Model.PackageName" />
-                <span asp-validation-for="PackageName" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="PackageName" class="control-label"></label>
+                    <p class="form-control-plaintext" style="color: white;">@Model.PackageName</p>
+                    <input type="hidden" asp-for="PackageName" value="@Model.PackageName" />
+                    <span asp-validation-for="PackageName" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <p class="form-control-plaintext" style="color: white;">@Model.StartDate</p>
-                <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <p class="form-control-plaintext" style="color: white;">@Model.StartDate</p>
+                    <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <p class="form-control-plaintext" style="color: white;">@Model.EndDate</p>
-                <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <p class="form-control-plaintext" style="color: white;">@Model.EndDate</p>
+                    <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <p class="form-control-plaintext" style="color: white;">@Model.Description</p>
-                <input type="hidden" asp-for="Description" value="@Model.Description" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <p class="form-control-plaintext" style="color: white;">@Model.Description</p>
+                    <input type="hidden" asp-for="Description" value="@Model.Description" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="BasePrice" class="control-label"></label>
-                <p class="form-control-plaintext" style="color: white;">@Model.BasePrice.ToString("C")</p>
-                <input type="hidden" asp-for="BasePrice" value="@Model.BasePrice" />
-                <span asp-validation-for="BasePrice" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="BasePrice" class="control-label"></label>
+                    <p class="form-control-plaintext" style="color: white;">@Model.BasePrice.ToString("C")</p>
+                    <input type="hidden" asp-for="BasePrice" value="@Model.BasePrice" />
+                    <span asp-validation-for="BasePrice" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Travellers" class="control-label"></label>
-                <input asp-for="Travellers" class="form-control" min="1" max="10" value="1" />
-                <span asp-validation-for="Travellers" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Travellers" class="control-label"></label>
+                    <input asp-for="Travellers" class="form-control" min="1" max="10" value="1" />
+                    <span asp-validation-for="Travellers" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="TripType" class="control-label"></label>
-                <select asp-for="TripType" class="form-control" asp-items="@ViewBag.List"></select>
-                <span asp-validation-for="TripType" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="TripType" class="control-label"></label>
+                    <select asp-for="TripType" class="form-control" asp-items="@ViewBag.List"></select>
+                    <span asp-validation-for="TripType" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Book it!" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <input type="submit" value="Add to cart" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
