@@ -2,6 +2,10 @@
 @inject SignInManager<TravelExpertData.Models.User> SignInManager
 @inject UserManager<TravelExpertData.Models.User> UserManager
 
+@{  
+  
+  
+}
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -22,6 +26,10 @@
                 </li>
             </ul>
         </li>
+        if (SignInManager.IsSignedIn(User)){
+
+        <img src="@ViewBag.Image" alt="User Image" class="img-fluid rounded-circle" style="width: 50px; height: 50px;" />
+        }
     }
     else
     {

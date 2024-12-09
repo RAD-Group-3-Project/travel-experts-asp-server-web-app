@@ -33,6 +33,12 @@ namespace TravelExpertData.Repository
             return db.Customers.SingleOrDefault(c => c.CustomerId == customerId);
         }
 
+        public static void UpdateCustomer(TravelExpertContext db , Customer customer)
+        {
+            db.Customers.Update(customer);  
+            db.SaveChanges();
+        }
+
 
 
     }

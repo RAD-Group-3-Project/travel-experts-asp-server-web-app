@@ -41,6 +41,16 @@ public class ProfileController : Controller
         {
             
         }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
         return View(customer);
     }
 
@@ -57,21 +67,39 @@ public class ProfileController : Controller
         {
 
         }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
+
         return View(customer);
     }
     [HttpPost]
     public async Task<IActionResult> EditCustomerAsync(TravelExpertData.Models.Customer customer , IFormFile profileImage)
     {
-        if (profileImage != null) 
+        if (profileImage != null)
         {
             var user = await userManager.GetUserAsync(User);
             int customerId = Convert.ToInt32(user.CustomerId);
             var extension = Path.GetExtension(profileImage.FileName);
-            var filename = Path.Combine(_host.WebRootPath,"images", "profileImages", $"{customerId}{extension}");
-            profileImage.CopyTo(new FileStream(filename, FileMode.Create));
+            var filename = Path.Combine(_host.WebRootPath, "images", "profileImages", $"{customerId}{extension}");
 
-            
+            // Ensure the file stream is properly disposed using 'using'
+            using (var fileStream = new FileStream(filename, FileMode.Create))
+            {
+                await profileImage.CopyToAsync(fileStream); // Use async copy to avoid blocking the thread
+            }
+
+            customer.ProfileImg = $"{customerId}{extension}";
         }
+        ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}";
+        CustomerRepository.UpdateCustomer(_context, customer);
         return View();
     }
 }

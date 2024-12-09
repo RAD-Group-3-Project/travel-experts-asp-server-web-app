@@ -41,6 +41,31 @@ public class BookingController : Controller
             // Handle the case where customerId is null (you can throw an exception, return an empty list, etc.)
             bookingsById = new List<Booking>(); // Or handle the case appropriately
         }
+        if (signInManager.IsSignedIn(User))
+        {
+            var customer = new TravelExpertData.Models.Customer();
+           
+            if (customerId.HasValue)  // Check if customerId has a value
+            {
+                customer = CustomerRepository.GetCustomerById(_context, customerId.Value);
+            }
+            else
+            {
+                // Handle the case where CustomerId is null (e.g., the user is not associated with a customer)
+            }
+
+            // Set the profile image or default image if not set
+            if (!string.IsNullOrEmpty(customer.ProfileImg))
+            {
+                // If there's a profile image, set the full path
+                ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+            }
+            else
+            {
+                // Default image if no profile image is set
+                ViewBag.Image = "/images/profileImages/default.jpg";
+            }
+        }
         //ViewBag.List = bookingsById;
         return View(bookingsById);
     }
