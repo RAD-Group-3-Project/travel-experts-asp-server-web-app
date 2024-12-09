@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    scroll-behavior: smooth;
 }
 
 @media (min-width: 768px) {
@@ -19,4 +20,50 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.btn-primary-custom {
+    background-color: #ffd358 ;
+    color: #002a45 ;
+    border: none;
+}
+
+.btn-primary-custom:hover {
+    background-color: #ffb915 ;
+    color: #002a45 ;
+}
+
+.bg-primary-custom {
+    background-color: #002a45 ;
+}
+
+.bg-dark-custom {
+    background-color: #001b2f;
+}
+
+.text-primary-custom {
+    color: #002A45;
+}
+
+.text-accent {
+    color: #ffd358 !important;
+}
+
+.nav-link:hover {
+    color: #ffd358 !important;
+}
+
+.hero-overlay {
+    background: linear-gradient(to bottom, rgba(1, 27, 47, 0.8), rgba(1, 27, 47, 0.9));
+}
+
+#home {
+    height: 100vh;
+    background-image: url('../images/hero-pic.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.text-right {
+    text-align: right;
 }

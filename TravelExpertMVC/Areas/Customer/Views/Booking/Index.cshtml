@@ -1,0 +1,23 @@
+﻿@model List<TravelExpertData.Models.Booking>
+@{
+}
+
+<h2>Bookings</h2>
+
+@if (Model != null && Model.Any())
+{
+    <ul>
+        @foreach (var booking in Model)
+        {   
+            <li>
+                Booking Id: @booking.BookingId, Booking Date: @booking.BookingDate
+                Package Name : @booking.Package.PkgName, 
+                
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No bookings found.</p>
+}
