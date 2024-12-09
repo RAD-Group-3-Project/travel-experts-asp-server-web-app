@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
@@ -175,7 +176,12 @@ public class PackagesController : Controller
         }
 
         // get Cart detail
-        Cart cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+        Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+        if (cart == null)
+        {
+            Debug.WriteLine($"Can't find pending cart with customer id: {user.CustomerId}");
+            return RedirectToAction("Index", "Home");
+        }
         // get CartItem detail
         List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
 
