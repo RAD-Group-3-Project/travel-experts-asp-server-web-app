@@ -37,18 +37,17 @@ public class WalletController : Controller
         }
         else
         {
-            // Handle the case where CustomerId is null (e.g., the user is not associated with a customer)
         }
 
         // Set the profile image or default image if not set
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
-            // If there's a profile image, set the full path
-            ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
         }
         else
         {
-            // Default image if no profile image is set
+            // Default image 
             ViewBag.Image = "/images/profileImages/default.jpg";
         }
     

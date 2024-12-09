@@ -42,10 +42,10 @@ public class HomeController : Controller
 
             // Set the profile image or default image if not set
             if (!string.IsNullOrEmpty(customer.ProfileImg))
-            {   
+            {
 
                 // If there's a profile image, set the full path
-                ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+                ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
             }
             else
             {   

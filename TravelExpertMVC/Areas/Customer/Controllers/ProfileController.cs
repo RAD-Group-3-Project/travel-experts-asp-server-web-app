@@ -44,7 +44,7 @@ public class ProfileController : Controller
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
-            ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
         }
         else
         {
@@ -70,7 +70,7 @@ public class ProfileController : Controller
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
-            ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
         }
         else
         {
@@ -90,16 +90,33 @@ public class ProfileController : Controller
             var extension = Path.GetExtension(profileImage.FileName);
             var filename = Path.Combine(_host.WebRootPath, "images", "profileImages", $"{customerId}{extension}");
 
-            // Ensure the file stream is properly disposed using 'using'
-            using (var fileStream = new FileStream(filename, FileMode.Create))
+            // Check if the customer already has a profile image and delete it if it exists
+            if (!string.IsNullOrEmpty(customer.ProfileImg))
             {
-                await profileImage.CopyToAsync(fileStream); // Use async copy to avoid blocking the thread
+                var existingImagePath = Path.Combine(_host.WebRootPath, "images", "profileImages", customer.ProfileImg);
+                if (System.IO.File.Exists(existingImagePath))
+                {
+                    System.IO.File.Delete(existingImagePath); // Delete the existing file
+                }
             }
 
-            customer.ProfileImg = $"{customerId}{extension}";
+            // Save the new profile image
+            using (var fileStream = new FileStream(filename, FileMode.Create))
+            {
+                await profileImage.CopyToAsync(fileStream); // Asynchronously copy the file to disk
+            }
+
+            customer.ProfileImg = $"{customerId}{extension}"; // Update the profile image reference in the model
         }
-        ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}";
-        CustomerRepository.UpdateCustomer(_context, customer);
+
+        // Pass the image URL to the view and refresh the cached image
+        ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+
+        // Update the customer in the database
+        await CustomerRepository.UpdateCustomerAsync(_context, customer);
+
         return View();
+
+        
     }
 }
