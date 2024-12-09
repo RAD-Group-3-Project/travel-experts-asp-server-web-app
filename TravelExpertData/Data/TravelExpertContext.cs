@@ -280,6 +280,12 @@ public partial class TravelExpertContext : IdentityDbContext<User>
         {
             entity.Property(e => e.Price)
                 .HasColumnType("decimal(18, 2)");
+        });
+
+        modelBuilder.Entity<Cart>(entity =>
+        {
+            entity.Property(e => e.SubTotal)
+                .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Tax)
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Total)

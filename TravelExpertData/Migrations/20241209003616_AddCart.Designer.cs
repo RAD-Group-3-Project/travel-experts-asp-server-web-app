@@ -12,7 +12,7 @@ using TravelExpertData.Data;
 namespace TravelExpertData.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    [Migration("20241208235308_AddCart")]
+    [Migration("20241209003616_AddCart")]
     partial class AddCart
     {
         /// <inheritdoc />
@@ -416,6 +416,18 @@ namespace TravelExpertData.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -438,12 +450,6 @@ namespace TravelExpertData.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Total")
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("Traveller")
@@ -1101,13 +1107,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8602901-5936-4024-8626-77df5f65bf98",
+                            ConcurrencyStamp = "0387ab53-8c59-4e64-8d6a-24ceb9b88d9c",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cf024159-13d8-40d6-948c-bbbb23a293c7",
+                            SecurityStamp = "23dd7aa8-e3e9-4d56-bf9e-544331bc8bf5",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1115,13 +1121,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d38d27fa-7483-4a13-83c1-1d01a8b0d491",
+                            ConcurrencyStamp = "c7cccd8c-088b-43b5-ad8e-ff3f5c9a0926",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "94fb29e9-152b-4779-8039-542802f05925",
+                            SecurityStamp = "19222007-ad53-48b1-a190-db601f32e228",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });

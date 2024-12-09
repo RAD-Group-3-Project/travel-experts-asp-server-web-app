@@ -18,6 +18,10 @@ namespace TravelExpertData.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -41,9 +45,7 @@ namespace TravelExpertData.Migrations
                     PackageId = table.Column<int>(type: "int", nullable: false),
                     Traveller = table.Column<int>(type: "int", nullable: false),
                     TripTypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,14 +69,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "d38d27fa-7483-4a13-83c1-1d01a8b0d491", "94fb29e9-152b-4779-8039-542802f05925" });
+                values: new object[] { "c7cccd8c-088b-43b5-ad8e-ff3f5c9a0926", "19222007-ad53-48b1-a190-db601f32e228" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "f8602901-5936-4024-8626-77df5f65bf98", "cf024159-13d8-40d6-948c-bbbb23a293c7" });
+                values: new object[] { "0387ab53-8c59-4e64-8d6a-24ceb9b88d9c", "23dd7aa8-e3e9-4d56-bf9e-544331bc8bf5" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",

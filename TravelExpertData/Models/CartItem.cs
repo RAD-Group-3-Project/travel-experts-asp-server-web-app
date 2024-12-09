@@ -10,6 +10,4 @@ public class CartItem
     public int Traveller { get; set; }
     public string TripTypeId { get; set; }
     public decimal Price { get; set; }
-    public decimal Tax { get; set; }
-    public decimal Total { get; set; }
 }
