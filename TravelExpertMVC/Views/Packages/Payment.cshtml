@@ -19,28 +19,31 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    @foreach (var cartItem in Model.CartItems)
+                    {
+                        <tbody>
                         <tr>
-                            <td>@Model.BookingDetail.PackageName</td>
-                            <td>@Model.BookingDetail.Description</td>
-                            <td>@Model.BookingDetail.Travellers</td>
-                            <td>@Model.BookingDetail.BasePrice</td>
+                            <td>@cartItem.Package.PkgName</td>
+                            <td>@cartItem.Package.PkgDesc</td>
+                            <td>@cartItem.Traveller</td>
+                            <td>@cartItem.Price</td>
                             <td>
                                 <button class="btn btn-sm btn-danger">×</button>
                             </td>
                         </tr>
-                    </tbody>
+                        </tbody>
+                    }
                 </table>
                 <a asp-controller="Packages" asp-action="ReviewBooking" class="text-primary">&larr; Continue Shopping</a>
             </div>
             <div class="col-md-3">
                 <div class="border p-3 rounded bg-light">
                     <h4>Payment Summary</h4>
-                    <p class="mb-2"><strong>Subtotal:</strong> @Model.BookingDetail.BasePrice</p>
-                    <p class="mb-2"><strong>Tax:</strong> 0</p>
+                    <p class="mb-2"><strong>Subtotal:</strong> @Model.Cart.SubTotal</p>
+                    <p class="mb-2"><strong>Tax:</strong> @Model.Cart.Tax</p>
                     <p class="mb-3"><strong>Shipping:</strong> Free</p>
                     <hr>
-                    <p class="mb-4"><strong>Total:</strong> 0</p>
+                    <p class="mb-4"><strong>Total:</strong> @Model.Cart.Total</p>
 
                     <button class="btn btn-primary w-100 mb-2">Pay with Wallet</button>
                     <button class="btn btn-secondary w-100">Other Payment Methods</button>

@@ -1,7 +1,9 @@
-﻿namespace TravelExpertMVC.Models;
+﻿using TravelExpertData.Models;
+
+namespace TravelExpertMVC.Models;
 
 public class PaymentViewModel
 {
-    public int Id { get; set; }
-    public BookingViewModel BookingDetail { get; set; }
+    public Cart Cart { get; set; }
+    public List<CartItem> CartItems { get; set; }
 }
