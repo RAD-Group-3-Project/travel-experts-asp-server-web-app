@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Payment";
 }
-
+@if (ViewBag.InsufficientFund)
+{
+    <div class="alert alert-danger">
+        Insufficient funds in your wallet. Please add more money to your wallet or use a different payment method.
+    </div>
+}
 <div class="container">
     <div class="bg-white text-black p-4">
         <div class="row">

@@ -185,6 +185,30 @@ public class PackagesController : Controller
         // get CartItem detail
         List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
 
+        // is sufficient fund?
+        Wallet? wallet = WalletRepository.GetWallet(_context, (int)user.CustomerId);
+        if (wallet == null || wallet.Balance < cart.Total)
+        {
+            ViewBag.InsufficientFund = true;
+            return View("Payment", new PaymentViewModel() { Cart = cart, CartItems = cartItems });
+        }
+
+        // deduct the amount from the wallet
+        wallet.Balance -= cart.Total;
+        WalletRepository.UpdateWallet(_context, wallet);
+
+        // create transaction
+        Transaction newTransaction = new Transaction()
+        {
+            WalletId = wallet.Id,
+            TransactionType = TransactionType.Debit,
+            Amount = cart.Total,
+            Description = "Payment for booking",
+            TransactionDate = DateTime.Now,
+        };
+        TransactionRepository.AddTransaction(_context, newTransaction);
+
+        // create booking
         foreach (CartItem item in cartItems)
         {
             // Create a new booking
@@ -226,6 +250,8 @@ public class PackagesController : Controller
             cart.Status = CartStatus.Completed;
             CartRepository.UpdateCart(_context, cart);
         }
+
+        // popup message
 
         return RedirectToAction("Index", "Home");
     }
