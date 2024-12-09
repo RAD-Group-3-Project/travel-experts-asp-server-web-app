@@ -25,7 +25,8 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         if (signInManager.IsSignedIn(User))
-        {
+        {   
+            
             var customer = new Customer();
             var user = await userManager.GetUserAsync(User);
             int? customerId = user?.CustomerId; 
@@ -41,12 +42,13 @@ public class HomeController : Controller
 
             // Set the profile image or default image if not set
             if (!string.IsNullOrEmpty(customer.ProfileImg))
-            {
+            {   
+
                 // If there's a profile image, set the full path
                 ViewBag.Image = "/images/profileImages/" + customer.ProfileImg;
             }
             else
-            {
+            {   
                 // Default image if no profile image is set
                 ViewBag.Image = "/images/profileImages/default.jpg";
             }
