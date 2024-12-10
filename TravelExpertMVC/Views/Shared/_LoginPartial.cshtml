@@ -16,17 +16,27 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                    <a class="dropdown-item" asp-area="Customer" asp-controller="Home" asp-action="Index">
-                        My Account
+                    <a class="dropdown-item" asp-area="Customer" asp-controller="Booking" asp-action="Index">
+                        Booking
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="Customer" asp-controller="Wallet" asp-action="Index">
+                        Wallet
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="Customer" asp-controller="Profile" asp-action="Index">
+                        Profile
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" asp-area="" asp-controller="Packages" asp-action="Payment">
-                        My Cart
+                        Cart
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">
+                    <a class="dropdown-item text-danger" asp-area="" asp-controller="Account" asp-action="Logout">
                         Logout
                     </a>
                 </li>
