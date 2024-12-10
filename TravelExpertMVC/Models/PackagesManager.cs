@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
-using TravelExpertMVC.Data;
+using TravelExpertData.Data;
+using TravelExpertData.Models;
 
 namespace TravelExpertMVC.Models
 {

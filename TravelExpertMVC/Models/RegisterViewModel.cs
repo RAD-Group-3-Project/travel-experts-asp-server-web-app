@@ -26,7 +26,7 @@ namespace TravelExpertMVC.Models
 
         [Required(ErrorMessage = "Province is required")]
         [Display(Name = "Province")]
-        [StringLength(2, ErrorMessage = "Province must be in short abbreviation (e.g, AB, SK, BC)")]
+        [StringLength(2)]
         public string? Prov { get; set; }
 
         [Required(ErrorMessage = "Postal code is required")]
