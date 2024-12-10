@@ -282,7 +282,6 @@ public class PackagesController : Controller
 
     public IActionResult ThankYou()
     {
-
         return View();
     }
 }
