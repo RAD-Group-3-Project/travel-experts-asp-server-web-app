@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
-using System.IO;
-using Microsoft.Extensions.Hosting.Internal;
+using TravelExpertMVC.Util;
 
 
 namespace TravelExpertMVC.Areas.Customer.Controllers;
@@ -35,7 +35,7 @@ public class ProfileController : Controller
         int customerId = Convert.ToInt32(user.CustomerId);
         if (customerId != null)
         {
-           customer = CustomerRepository.GetCustomerById(_context, customerId);
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
         }
         else
         {
@@ -54,7 +54,7 @@ public class ProfileController : Controller
         return View(customer);
     }
 
-    public async Task<IActionResult> EditCustomer(int id) 
+    public async Task<IActionResult> EditCustomer(int id)
     {
         var customer = new TravelExpertData.Models.Customer();
         var user = await userManager.GetUserAsync(User);
@@ -78,21 +78,25 @@ public class ProfileController : Controller
             ViewBag.Image = "/images/profileImages/default.jpg";
         }
 
+        // Passes the provinces and cities to the viewbag for dropdowns
+        ViewBag.Provinces = new SelectList(Utils.Provinces, customer.CustProv);
+        ViewBag.Cities = new SelectList(Utils.Cities, customer.CustCity);
+
         return View(customer);
     }
     [HttpPost]
     [RequestSizeLimit(5000000)] // 5 meg upload limit
-    public async Task<IActionResult> EditCustomerAsync(TravelExpertData.Models.Customer customer , IFormFile profileImage)
+    public async Task<IActionResult> EditCustomerAsync(TravelExpertData.Models.Customer customer, IFormFile profileImage)
     {
         if (profileImage != null)
         {
-            
+
             var user = await userManager.GetUserAsync(User);
             int customerId = Convert.ToInt32(user.CustomerId);
             var extension = Path.GetExtension(profileImage.FileName);
             var permittedExtensions = new[] { ".jpg", ".png", ".gif", ".jpeg" };
             var filename = Path.Combine(_host.WebRootPath, "images", "profileImages", $"{customerId}{extension}");
-            
+
             if (string.IsNullOrEmpty(extension) || !permittedExtensions.Contains(extension))
             {
                 ModelState.AddModelError("", "Invalid file type.");
@@ -103,14 +107,14 @@ public class ProfileController : Controller
                 var existingImagePath = Path.Combine(_host.WebRootPath, "images", "profileImages", customer.ProfileImg);
                 if (System.IO.File.Exists(existingImagePath))
                 {
-                    System.IO.File.Delete(existingImagePath); 
+                    System.IO.File.Delete(existingImagePath);
                 }
             }
 
             // Save the new profile image
             using (var fileStream = new FileStream(filename, FileMode.Create))
             {
-                await profileImage.CopyToAsync(fileStream); 
+                await profileImage.CopyToAsync(fileStream);
             }
 
             customer.ProfileImg = $"{customerId}{extension}";
@@ -124,6 +128,6 @@ public class ProfileController : Controller
 
         return View();
 
-        
+
     }
 }
