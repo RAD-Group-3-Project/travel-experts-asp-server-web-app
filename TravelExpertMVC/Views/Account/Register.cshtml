@@ -41,12 +41,16 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="City" class="form-label"> </label>
-                    <input asp-for="City" class="form-control" type="text" placeholder="Enter your city" />
+                    <select asp-for="City" asp-items="@ViewBag.Cities" class="form-select">
+                        <option value="" disabled selected>Select your city</option>
+                    </select>
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Prov" class="form-label"> </label>
-                    <input asp-for="Prov" class="form-control" type="text" placeholder="Enter your province" />
+                    <select asp-for="Prov" asp-items="@ViewBag.Provinces" class="form-select">
+                        <option value="" disabled selected>Select your province</option>
+                    </select>
                     <span asp-validation-for="Prov" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
