@@ -1,56 +1,106 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
+using TravelExpertMVC.Areas.Customer.Models;
+using TravelExpertMVC.Util;
 
 namespace TravelExpertMVC.Areas.Customer.Controllers;
 [Area("Customer")]
 public class WalletController : Controller
-{   
-    // Identity object to manage the signin and file uploads via host
-    private readonly SignInManager<User> signInManager;
-    private readonly UserManager<User> userManager;
-    private readonly IWebHostEnvironment _host;
-    // For DB Stufff
-    TravelExpertContext _context;
+{
+    public const string COUPON_1000 = "COUPON-1000-REDEEM";
+    public const string COUPON_50000 = "COUPON-5000-REDEEM";
+    public const string COUPON_10000 = "COUPON-10000-REDEEM";
 
+    private readonly TravelExpertContext _context;
+    private readonly UserManager<User> _userManager;
 
-    // Replaces manager classes and DI's inlandcontext
-    public WalletController(SignInManager<User> signInManager, UserManager<User> userManager, TravelExpertContext context, IWebHostEnvironment host)
+    public WalletController(TravelExpertContext context, UserManager<User> userManager)
     {
-        this.signInManager = signInManager;
-        this.userManager = userManager;
         _context = context;
-        _host = host;
-
+        _userManager = userManager;
     }
+
     public async Task<IActionResult> Index()
     {
-        var customer = new TravelExpertData.Models.Customer();
-        var user = await userManager.GetUserAsync(User);
-        int? customerId = user?.CustomerId;
-
-        if (customerId.HasValue)  // Check if customerId has a value
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
         {
-            customer = CustomerRepository.GetCustomerById(_context, customerId.Value);
-        }
-        else
-        {
+            return RedirectToAction("Login", "Account");
         }
 
-        // Set the profile image or default image if not set
-        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        // get wallet by customer id
+        var wallet = WalletRepository.GetWallet(_context, (int)user.CustomerId!);
+        if (wallet == null)
         {
+            Debug.WriteLine($"Error: can't find wallet by customer id: [{user.CustomerId}]");
+            TempData["ErrorMessage"] = ErrorMessages.WALLET_NOT_FOUND;
+            return View(new MyWalletViewModel() { Transactions = [], Wallet = new Wallet() });
+        }
 
-            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
-        }
-        else
+        // get transaction by wallet id
+        var transactions = TransactionRepository.GetTransactions(_context, wallet.Id);
+
+        return View(new MyWalletViewModel() { Transactions = transactions, Wallet = wallet });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Redeem(string couponCode)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
         {
-            // Default image 
-            ViewBag.Image = "/images/profileImages/default.jpg";
+            return RedirectToAction("Login", "Account");
         }
-    
-        return View();
+
+        var wallet = WalletRepository.GetWallet(_context, (int)user.CustomerId!);
+        if (wallet == null)
+        {
+            Debug.WriteLine($"Error: can't find wallet in Redeem() by customer id: [{user.CustomerId}]");
+            TempData["ErrorMessage"] = ErrorMessages.WALLET_NOT_FOUND;
+            return View("Index", new MyWalletViewModel() { Transactions = [], Wallet = new Wallet() });
+        }
+
+        decimal couponAmount = 0;
+        switch (couponCode)
+        {
+            case COUPON_1000:
+                couponAmount = 1000;
+                break;
+            case COUPON_50000:
+                couponAmount = 5000;
+                break;
+            case COUPON_10000:
+                couponAmount = 10000;
+                break;
+            default:
+                Debug.WriteLine($"Error: unknown coupon code: [{couponCode}]");
+                TempData["ErrorMessage"] = "Invalid coupon code. Please enter a valid coupon code.";
+
+                return RedirectToAction("Index");
+        }
+
+        wallet.Balance += couponAmount;
+
+        // update balance
+        WalletRepository.UpdateWallet(_context, wallet);
+
+        // create transaction
+        Transaction transaction = new Transaction()
+        {
+            WalletId = wallet.Id,
+            Description = $"Top-up money by coupon",
+            Amount = couponAmount,
+            TransactionDate = DateTime.Now,
+            TransactionType = TransactionType.Credit
+        };
+        TransactionRepository.AddTransaction(_context, transaction);
+
+        TempData["SuccessMessage"] = "Coupon redeemed successfully!";
+
+        return RedirectToAction("Index");
     }
 }

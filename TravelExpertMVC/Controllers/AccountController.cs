@@ -77,7 +77,12 @@ public class AccountController : Controller
                 CustEmail = newRegistration.Email
             };
             CustomerRepository.AddCustomer(_context, newCustomer);
+
             int custId = CustomerRepository.GetLastId(_context);
+
+            // Create a wallet for the new customer
+            WalletRepository.CreateWallet(_context, custId);
+
             User newUser = new User()
             {
                 UserName = newRegistration.Email,
