@@ -39,7 +39,7 @@ public class ProfileController : Controller
         }
         else
         {
-            
+            ModelState.AddModelError("", "Cannot find customer");
         }
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
@@ -65,7 +65,7 @@ public class ProfileController : Controller
         }
         else
         {
-
+            ModelState.AddModelError("", "Cannot find customer");
         }
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
@@ -81,35 +81,42 @@ public class ProfileController : Controller
         return View(customer);
     }
     [HttpPost]
+    [RequestSizeLimit(5000000)] // 5 meg upload limit
     public async Task<IActionResult> EditCustomerAsync(TravelExpertData.Models.Customer customer , IFormFile profileImage)
     {
         if (profileImage != null)
         {
+            
             var user = await userManager.GetUserAsync(User);
             int customerId = Convert.ToInt32(user.CustomerId);
             var extension = Path.GetExtension(profileImage.FileName);
+            var permittedExtensions = new[] { ".jpg", ".png", ".gif", ".jpeg" };
             var filename = Path.Combine(_host.WebRootPath, "images", "profileImages", $"{customerId}{extension}");
-
+            
+            if (string.IsNullOrEmpty(extension) || !permittedExtensions.Contains(extension))
+            {
+                ModelState.AddModelError("", "Invalid file type.");
+            }
             // Check if the customer already has a profile image and delete it if it exists
             if (!string.IsNullOrEmpty(customer.ProfileImg))
             {
                 var existingImagePath = Path.Combine(_host.WebRootPath, "images", "profileImages", customer.ProfileImg);
                 if (System.IO.File.Exists(existingImagePath))
                 {
-                    System.IO.File.Delete(existingImagePath); // Delete the existing file
+                    System.IO.File.Delete(existingImagePath); 
                 }
             }
 
             // Save the new profile image
             using (var fileStream = new FileStream(filename, FileMode.Create))
             {
-                await profileImage.CopyToAsync(fileStream); // Asynchronously copy the file to disk
+                await profileImage.CopyToAsync(fileStream); 
             }
 
-            customer.ProfileImg = $"{customerId}{extension}"; // Update the profile image reference in the model
+            customer.ProfileImg = $"{customerId}{extension}";
         }
 
-        // Pass the image URL to the view and refresh the cached image
+        // Passes the new image to the viewbag with a "cachebuster" for immediate viewing 
         ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
 
         // Update the customer in the database

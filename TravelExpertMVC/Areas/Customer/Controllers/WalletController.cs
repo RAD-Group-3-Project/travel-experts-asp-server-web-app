@@ -36,7 +36,8 @@ public class WalletController : Controller
         }
         else
         {
-
+            ModelState.AddModelError("", "Cannot find customer");
+            return RedirectToAction("Login", "Account");
         }
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
@@ -82,7 +83,8 @@ public class WalletController : Controller
         }
         else
         {
-
+            ModelState.AddModelError("", "Cannot find customer");
+            return RedirectToAction("Login", "Account");
         }
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {

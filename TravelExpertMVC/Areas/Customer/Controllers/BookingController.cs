@@ -38,8 +38,8 @@ public class BookingController : Controller
         }
         else
         {
-            // Handle the case where customerId is null (you can throw an exception, return an empty list, etc.)
-            bookingsById = new List<Booking>(); // Or handle the case appropriately
+            
+            bookingsById = new List<Booking>(); 
         }
         if (signInManager.IsSignedIn(User))
         {
@@ -51,7 +51,8 @@ public class BookingController : Controller
             }
             else
             {
-                // Handle the case where CustomerId is null (e.g., the user is not associated with a customer)
+                ModelState.AddModelError("", "Cannot find customer");
+                return RedirectToAction("Login", "Account");
             }
 
             // Set the profile image or default image if not set
@@ -66,7 +67,7 @@ public class BookingController : Controller
                 ViewBag.Image = "/images/profileImages/default.jpg";
             }
         }
-        //ViewBag.List = bookingsById;
+        
         return View(bookingsById);
     }
 }

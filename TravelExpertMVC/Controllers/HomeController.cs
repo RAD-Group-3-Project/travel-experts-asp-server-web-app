@@ -37,7 +37,8 @@ public class HomeController : Controller
             }
             else
             {
-                // Handle the case where CustomerId is null (e.g., the user is not associated with a customer)
+                ModelState.AddModelError("", "Cannot find customer");
+                return RedirectToAction("Login", "Account");
             }
 
             // Set the profile image or default image if not set
