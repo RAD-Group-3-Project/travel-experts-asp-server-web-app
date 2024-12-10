@@ -5,7 +5,7 @@ using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
 using TravelExpertMVC.Areas.Customer.Models;
-using TravelExpertMVC.Models;
+using TravelExpertMVC.Util;
 
 namespace TravelExpertMVC.Areas.Customer.Controllers;
 [Area("Customer")]
@@ -37,9 +37,7 @@ public class WalletController : Controller
         if (wallet == null)
         {
             Debug.WriteLine($"Error: can't find wallet by customer id: [{user.CustomerId}]");
-
-            TempData["ErrorMessage"] = "Can't find wallet. Please contact support.";
-
+            TempData["ErrorMessage"] = ErrorMessages.WALLET_NOT_FOUND;
             return View(new MyWalletViewModel() { Transactions = [], Wallet = new Wallet() });
         }
 
@@ -62,7 +60,8 @@ public class WalletController : Controller
         if (wallet == null)
         {
             Debug.WriteLine($"Error: can't find wallet in Redeem() by customer id: [{user.CustomerId}]");
-            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            TempData["ErrorMessage"] = ErrorMessages.WALLET_NOT_FOUND;
+            return View("Index", new MyWalletViewModel() { Transactions = [], Wallet = new Wallet() });
         }
 
         decimal couponAmount = 0;
