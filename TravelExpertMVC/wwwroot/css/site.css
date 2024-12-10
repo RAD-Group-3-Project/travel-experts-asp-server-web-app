@@ -67,3 +67,44 @@ body {
 .text-right {
     text-align: right;
 }
+
+.nav-pills .nav-link {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #f0f0f0;
+    color: #003F66; 
+}
+
+.nav-pills .nav-link.active {
+    background-color: #0d6efd; 
+    color: #fff;
+    font-weight: bold;
+}
+
+.nav-pills .nav-link i {
+    font-size: 1.2rem;
+}
+
+h2 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 1;
+}
