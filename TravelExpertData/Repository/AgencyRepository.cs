@@ -7,6 +7,6 @@ public class AgencyRepository
 {
     public static List<Agency> GetAgencies(TravelExpertContext dbContext)
     {
-        return dbContext.Agencies.Include(a => a.Agents).ToList();
+        return dbContext.Agencies.Where(a=> a.IsActive==true).Include(a => a.Agents).Where(a=> a.IsActive==true).ToList();
     }
 }
