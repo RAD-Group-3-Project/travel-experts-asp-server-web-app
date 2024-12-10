@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
 using TravelExpertMVC.Models;
+using TravelExpertMVC.Util;
 
 namespace TravelExpertMVC.Controllers;
 public class AccountController : Controller
@@ -55,6 +57,10 @@ public class AccountController : Controller
     public IActionResult Register(RegisterViewModel newRegistration)
     {
         TempData["IsCustomBg"] = true;
+
+        ViewBag.Provinces = new SelectList(Utils.Provinces);
+        ViewBag.Cities = new SelectList(Utils.Cities);
+
         return View();
     }
 
