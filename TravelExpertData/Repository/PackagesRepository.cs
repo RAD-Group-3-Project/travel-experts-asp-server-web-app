@@ -9,7 +9,7 @@ namespace TravelExpertData.Repository
         // get all packages
         public static List<Package> GetPackages(TravelExpertContext db)
         {
-            return db.Packages.Include(p => p.PackagesProductsSuppliers).ToList();
+            return db.Packages.Where(p=> p.IsActive==true).Include(p => p.PackagesProductsSuppliers).ToList();
             //return Queryable.OrderBy<Package, string>(db.Packages.Include(p => p.PackagesProductsSuppliers), p => p.PkgName).ToList();
         }
 
