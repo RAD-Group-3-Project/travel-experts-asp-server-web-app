@@ -1,6 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model TravelExpertData.Models.Customer
 @{
 }
-<p>This is the content of Customer's profile</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-start my-4">Customer Profile</h2>
+                <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.ProfileImg):</strong>
+                <p>
+                <img src="@ViewBag.Image" alt="User Image" class="rounded float-right" style="width: 150px; height: 150px;" />
+                </p>
+                </div>
+                <h3 >Personal Information</h3>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustFirstName):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustFirstName)</p>
+                </div>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustLastName):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustLastName)</p>
+                </div>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustEmail):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustEmail)</p>
+                </div>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustAddress):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustAddress)</p>
+                </div>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustCity):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustCity)</p>
+                </div>
+
+                <h3 >Additional Information</h3>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustHomePhone):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustHomePhone)</p>
+                </div>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.CustBusPhone):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.CustBusPhone)</p>
+                </div>
+                <div class="mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Prefs):</strong>
+                    <p>@Html.DisplayFor(modelItem => modelItem.Prefs)</p>
+                </div>
+                    @Html.ActionLink("Edit Customer Information", "EditCustomer", new { id = Model.CustomerId })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

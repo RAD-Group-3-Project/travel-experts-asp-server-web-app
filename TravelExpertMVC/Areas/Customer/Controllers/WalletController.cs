@@ -27,6 +27,29 @@ public class WalletController : Controller
     public async Task<IActionResult> Index()
     {
         var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
+        
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+            ModelState.AddModelError("", "Cannot find customer");
+            return RedirectToAction("Login", "Account");
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
+       
         if (user == null)
         {
             return RedirectToAction("Login", "Account");
@@ -51,6 +74,28 @@ public class WalletController : Controller
     public async Task<IActionResult> Redeem(string couponCode)
     {
         var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
+
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+            ModelState.AddModelError("", "Cannot find customer");
+            return RedirectToAction("Login", "Account");
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
         if (user == null)
         {
             return RedirectToAction("Login", "Account");

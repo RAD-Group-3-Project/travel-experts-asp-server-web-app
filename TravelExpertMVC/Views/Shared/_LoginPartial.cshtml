@@ -2,6 +2,10 @@
 @inject SignInManager<TravelExpertData.Models.User> SignInManager
 @inject UserManager<TravelExpertData.Models.User> UserManager
 
+@{  
+  
+  
+}
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -16,17 +20,20 @@
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-controller="Packages" asp-action="Payment">
+                    <a class="dropdown-item" asp-area="default" asp-controller="Packages" asp-action="Payment">
                         My Cart
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                    <a class="dropdown-item" asp-area="default" asp-controller="Account" asp-action="Logout">
                         Logout
                     </a>
                 </li>
             </ul>
         </li>
+       
+        <img src="@ViewBag.Image" alt="User Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;" />
+       
     }
     else
     {

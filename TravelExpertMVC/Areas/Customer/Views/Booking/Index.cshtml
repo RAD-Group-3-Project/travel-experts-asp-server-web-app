@@ -2,22 +2,46 @@
 @{
 }
 
-<h2>Bookings</h2>
-
-@if (Model != null && Model.Any())
-{
-    <ul>
-        @foreach (var booking in Model)
-        {   
-            <li>
-                Booking Id: @booking.BookingId, Booking Date: @booking.BookingDate
-                Package Name : @booking.Package.PkgName, 
-                
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <p>No bookings found.</p>
-}
+<div class="container">
+    <div class="row">
+     
+        <div class="d-flex justify-content-center align-content-center p-4 my-2">
+         
+        </div>
+       
+        <div>
+            <h5>Bookings</h5>
+            @if (Model != null && Model.Any())
+                {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Booking Number</th>
+                            <th scope="col">Package Name</th>
+                            <th scope="col">Package Description</th>
+                            <th scope="col">Booking Date</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var booking in Model)
+                        {
+                            <tr>
+                                <td>@booking.BookingNo</td>
+                                <td>@booking.Package.PkgName</td>
+                                <td>@booking.Package.PkgDesc</td>
+                                <td>@booking.BookingDate.Value.ToString("yyyy-MM-dd")</td>
+                                <td>@booking.Package.PkgBasePrice.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                }
+            else
+            {
+                <p>No bookings found.</p>
+            }
+        </div>
+    </div>
+</div>
+</ul>

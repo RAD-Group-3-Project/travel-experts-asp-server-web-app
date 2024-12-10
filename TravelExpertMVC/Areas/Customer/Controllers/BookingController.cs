@@ -30,7 +30,7 @@ public class BookingController : Controller
         int? customerId = user.CustomerId;
         List<Booking> bookingsById = new List<Booking>();
 
-
+        
         if (customerId.HasValue)
         {
             // Call the method with the actual value of customerId
@@ -38,10 +38,36 @@ public class BookingController : Controller
         }
         else
         {
-            // Handle the case where customerId is null (you can throw an exception, return an empty list, etc.)
-            bookingsById = new List<Booking>(); // Or handle the case appropriately
+            
+            bookingsById = new List<Booking>(); 
         }
-        //ViewBag.List = bookingsById;
+        if (signInManager.IsSignedIn(User))
+        {
+            var customer = new TravelExpertData.Models.Customer();
+           
+            if (customerId.HasValue)  // Check if customerId has a value
+            {
+                customer = CustomerRepository.GetCustomerById(_context, customerId.Value);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Cannot find customer");
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Set the profile image or default image if not set
+            if (!string.IsNullOrEmpty(customer.ProfileImg))
+            {
+                // If there's a profile image, set the full path
+                ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+            }
+            else
+            {
+                // Default image if no profile image is set
+                ViewBag.Image = "/images/profileImages/default.jpg";
+            }
+        }
+        
         return View(bookingsById);
     }
 }
