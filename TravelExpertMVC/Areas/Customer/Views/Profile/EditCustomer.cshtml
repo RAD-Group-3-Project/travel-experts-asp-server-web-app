@@ -54,24 +54,24 @@
             </div>
             <div>
                 <label asp-for="CustHomePhone" class="form-label"></label>
-                <input asp-for="CustHomePhone" class="form-control" />
+                <input asp-for="CustHomePhone" class="form-control" type="tel" />
                 <span asp-validation-for="CustHomePhone" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="CustBusPhone" class="form-label"></label>
-                <input asp-for="CustBusPhone" class="form-control" />
+                <input asp-for="CustBusPhone" class="form-control" type="tel" />
                 <span asp-validation-for="CustBusPhone" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="CustEmail" class="form-label"></label>
                 <input asp-for="CustEmail" class="form-control" />
-                <span asp-validation-for="CustEmail" class="text-danger"></span>
+                <span asp-validation-for="CustEmail" class="text-danger" type="email"></span>
             </div>
-            <div>
+         @*    <div>
                 <label asp-for="AgentId" class="form-label"></label>
                 <input asp-for="AgentId" class="form-control" />
                 <span asp-validation-for="AgentId" class="text-danger"></span>
-            </div>
+            </div> *@
             <div>
                 <label asp-for="Prefs" class="form-label"></label>
                 <input asp-for="Prefs" class="form-control" />
