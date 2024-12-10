@@ -10,8 +10,9 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                @User.Identity!.Name
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="text-white me-2">@User.Identity!.Name</span>
+                <img src="@ViewBag.Image" alt="User Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;" />
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -20,20 +21,17 @@
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-area="default" asp-controller="Packages" asp-action="Payment">
+                    <a class="dropdown-item" asp-area="" asp-controller="Packages" asp-action="Payment">
                         My Cart
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-area="default" asp-controller="Account" asp-action="Logout">
+                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">
                         Logout
                     </a>
                 </li>
             </ul>
         </li>
-       
-        <img src="@ViewBag.Image" alt="User Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;" />
-       
     }
     else
     {
