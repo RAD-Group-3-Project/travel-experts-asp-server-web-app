@@ -45,9 +45,30 @@ public class PackagesController : Controller
     }
 
     [Authorize]
-    public ActionResult ReviewBooking(int id)
+    public async Task<ActionResult> ReviewBooking(int id)
     {
+        var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
 
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
         Package? package = PackagesRepository.GetPackageById(_context, id);
         BookingViewModel newBooking = new BookingViewModel()
         {
@@ -71,6 +92,27 @@ public class PackagesController : Controller
     public async Task<IActionResult> ReviewBookingAsync(BookingViewModel newBookingViewModel)
     {
         var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
+
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
         if (ModelState.IsValid) // Checks our models validity
         {
             // find the pending cart for the user
@@ -131,6 +173,27 @@ public class PackagesController : Controller
     public async Task<IActionResult> Payment()
     {
         var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
+
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
         if (user == null)
         {
             return RedirectToAction("Login", "Account");
