@@ -15,6 +15,7 @@ public partial class Customer
     [Display(Name ="First Name")]
     [StringLength(25)]
     public string CustFirstName { get; set; } = null!;
+
     [Display(Name = "Last Name")]
     [StringLength(25)]
     public string CustLastName { get; set; } = null!;
@@ -46,7 +47,7 @@ public partial class Customer
     [Display(Name = "Business Phone")]
     [StringLength(20)]
     public string CustBusPhone { get; set; } = null!;
-    
+
     [Display(Name = "Email")]
     [StringLength(50)]
     public string CustEmail { get; set; } = null!;
@@ -58,6 +59,7 @@ public partial class Customer
     [StringLength(20)]
     [Unicode(false)]
     public string? Prefs { get; set; }
+
     [Display(Name = "Profile Image")]
     [StringLength(20)]
     [Unicode(false)]
@@ -72,6 +74,7 @@ public partial class Customer
 
     [InverseProperty("Customer")]
     public virtual ICollection<CreditCard> CreditCards { get; set; } = new List<CreditCard>();
+
     [Display(Name = "Rewards Cards")]
     [InverseProperty("Customer")]
     public virtual ICollection<CustomersReward> CustomersRewards { get; set; } = new List<CustomersReward>();
