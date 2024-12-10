@@ -7,6 +7,7 @@ using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
 using TravelExpertMVC.Models;
+using TravelExpertMVC.Util;
 
 namespace TravelExpertMVC.Controllers;
 
@@ -135,12 +136,12 @@ public class PackagesController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        ViewBag.InsufficientFund = false;
-
         // get pending cart
         Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
         if (cart == null)
         {
+            Debug.WriteLine($"Can't find pending cart in Payment() with customer id: {user.CustomerId}");
+            TempData["ErrorMessage"] = ErrorMessages.GENERIC;
             return View(new PaymentViewModel() { Cart = new Cart(), CartItems = new List<CartItem>() });
         }
 
@@ -164,9 +165,11 @@ public class PackagesController : Controller
         Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
         if (cart == null)
         {
-            Debug.WriteLine($"Can't find pending cart with customer id: {user.CustomerId}");
-            return RedirectToAction("Index", "Home");
+            Debug.WriteLine($"Can't find pending cart in PaymentAsync() with customer id: {user.CustomerId}");
+            TempData["ErrorMessage"] = ErrorMessages.GENERIC;
+            return RedirectToAction("Payment", "Packages");
         }
+
         // get CartItem detail
         List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
 
@@ -174,12 +177,11 @@ public class PackagesController : Controller
         Wallet? wallet = WalletRepository.GetWallet(_context, (int)user.CustomerId);
         if (wallet == null || wallet.Balance < cart.Total)
         {
-            ViewBag.InsufficientFund = true;
-            return View("Payment", new PaymentViewModel() { Cart = cart, CartItems = cartItems });
+            TempData["ErrorMessage"] = ErrorMessages.INSUFFICIENT_FUND;
+            return RedirectToAction("Payment", "Packages");
         }
 
         // deduct the amount from the wallet
-        ViewBag.InsufficientFund = false;
         wallet.Balance -= cart.Total;
         WalletRepository.UpdateWallet(_context, wallet);
 

@@ -3,26 +3,29 @@
 @{
     ViewData["Title"] = "Payment";
 }
-@if (ViewBag.InsufficientFund)
-{
-    <div class="alert alert-danger">
-        Insufficient funds in your wallet. Please add more money to your wallet or use a different payment method.
-    </div>
-}
+
+
+
 <div class="container">
     <div class="bg-white text-black p-4">
         <div class="row">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
             <div class="col-md-9">
                 <h2>Booking Detail</h2>
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Travellers</th>
-                            <th>Price</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Travellers</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
                     </thead>
                     @foreach (var cartItem in Model.CartItems)
                     {
@@ -31,11 +34,11 @@
                             <td>@cartItem.Package.PkgName</td>
                             <td>@cartItem.Package.PkgDesc</td>
                             <td>@cartItem.Traveller</td>
-                                <td>@cartItem.Price.ToString("C2")</td>
+                            <td>@cartItem.Price.ToString("C2")</td>
                             <td>
                                 <form asp-action="RemoveItem" method="post">
-                                    <input type="hidden" name="cartItemId" value="@cartItem.Id" />
-                                    <input type="hidden" name="cartId" value="@Model.Cart.Id" />
+                                    <input type="hidden" name="cartItemId" value="@cartItem.Id"/>
+                                    <input type="hidden" name="cartId" value="@Model.Cart.Id"/>
                                     <button class="btn btn-sm btn-danger">×</button>
                                 </form>
                             </td>
@@ -55,7 +58,7 @@
                     <p class="mb-4"><strong>Total:</strong> @Model.Cart.Total.ToString("C2")</p>
 
                     <form asp-action="Payment" method="post">
-                        <input type="hidden" asp-for="Cart.Id" value="@Model.Cart.Id" />
+                        <input type="hidden" asp-for="Cart.Id" value="@Model.Cart.Id"/>
                         <button class="btn btn-primary-custom w-100 mb-2">Pay with Wallet</button>
                     </form>
                     <button class="btn btn-secondary w-100">Other Payment Methods</button>
