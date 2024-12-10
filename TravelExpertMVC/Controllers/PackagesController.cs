@@ -274,6 +274,10 @@ public class PackagesController : Controller
             };
             BookingRepository.AddBooking(_context, newBooking);
 
+            TempData["BookingNo"] = newBooking.BookingNo;
+            TempData["BookingDate"] = newBooking.BookingDate?.ToString("yyyy-M-d");
+            TempData["TravelerCount"] = newBooking.TravelerCount.ToString();
+
             // find the product_supplier_id
             List<PackagesProductsSupplier> ppsList = PackageProductSupplierRepository.GetPackagesProductsSupplierByPackageId(_context, item.PackageId);
 
@@ -302,9 +306,7 @@ public class PackagesController : Controller
             CartRepository.UpdateCart(_context, cart);
         }
 
-        // popup message
-
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("ThankYou");
     }
 
     [Authorize]
@@ -339,5 +341,10 @@ public class PackagesController : Controller
     {
         const decimal GST_RATE = 0.05m;
         return basePrice * GST_RATE;
+    }
+
+    public IActionResult ThankYou()
+    {
+        return View();
     }
 }

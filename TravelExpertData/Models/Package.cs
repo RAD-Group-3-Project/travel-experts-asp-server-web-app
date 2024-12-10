@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace TravelExpertData.Models;
 
@@ -31,6 +28,9 @@ public partial class Package
 
     [Column("is_active")]
     public bool? IsActive { get; set; }
+
+    [StringLength(50)]
+    public string PkgImage { get; set; }
 
     [InverseProperty("Package")]
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();

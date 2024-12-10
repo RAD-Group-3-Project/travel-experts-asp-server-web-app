@@ -22,7 +22,7 @@
             {
                 <div class="col-md-4">
                     <div class="card bg-light">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="@package.PkgName" />
+                        <img src="@(package.PkgImage != "" ? "/images/" + package.PkgImage : "https://via.placeholder.com/400x300")" class="card-img-top" alt="@package.PkgName" />
                         <div class="card-body">
                             <h5 class="card-title text-dark fw-bold">@package.PkgName</h5>
                             <p class="card-text text-muted">@package.PkgDesc</p>
