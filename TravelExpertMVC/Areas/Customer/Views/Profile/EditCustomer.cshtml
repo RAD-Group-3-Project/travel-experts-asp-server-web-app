@@ -1,0 +1,97 @@
+﻿@model TravelExpertData.Models.Customer
+
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<h1>EditCustomer</h1>
+
+<h4>Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditCustomer" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div style="display: none;">
+                <label asp-for="CustomerId" class="form-label"></label>
+                <input asp-for="CustomerId" class="form-control" />
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustFirstName" class="form-label"></label>
+                <input asp-for="CustFirstName" class="form-control" />
+                <span asp-validation-for="CustFirstName" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustLastName" class="form-label"></label>
+                <input asp-for="CustLastName" class="form-control" />
+                <span asp-validation-for="CustLastName" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustAddress" class="form-label"></label>
+                <input asp-for="CustAddress" class="form-control" />
+                <span asp-validation-for="CustAddress" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustCity" class="form-label"></label>
+                <select asp-for="CustCity" class="form-select" asp-items="@ViewBag.Cities"></select>
+                <span asp-validation-for="CustCity" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustProv" class="form-label"></label>
+                <select asp-for="CustProv" class="form-select" asp-items="@ViewBag.Provinces"></select>
+                <span asp-validation-for="CustProv" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustPostal" class="form-label"></label>
+                <input asp-for="CustPostal" class="form-control" />
+                <span asp-validation-for="CustPostal" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustCountry" class="form-label"></label>
+                <input asp-for="CustCountry" class="form-control" />
+                <span asp-validation-for="CustCountry" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustHomePhone" class="form-label"></label>
+                <input asp-for="CustHomePhone" class="form-control" />
+                <span asp-validation-for="CustHomePhone" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustBusPhone" class="form-label"></label>
+                <input asp-for="CustBusPhone" class="form-control" />
+                <span asp-validation-for="CustBusPhone" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CustEmail" class="form-label"></label>
+                <input asp-for="CustEmail" class="form-control" />
+                <span asp-validation-for="CustEmail" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="AgentId" class="form-label"></label>
+                <input asp-for="AgentId" class="form-control" />
+                <span asp-validation-for="AgentId" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Prefs" class="form-label"></label>
+                <input asp-for="Prefs" class="form-control" />
+                <span asp-validation-for="Prefs" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="ProfileImg" class="form-label"></label>
+                <input asp-for="ProfileImg" type="file" accept="image/jpeg, image/png, image/gif"  class="form-control" name="profileImage" />
+                <span asp-validation-for="ProfileImg" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

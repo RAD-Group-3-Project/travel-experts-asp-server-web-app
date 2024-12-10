@@ -2,30 +2,33 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
 using TravelExpertData.Repository;
-using TravelExpertMVC.Areas.Customer.Controllers;
 using TravelExpertMVC.Models;
+using TravelExpertMVC.Util;
 
 namespace TravelExpertMVC.Controllers;
+
 public class PackagesController : Controller
 {
     // Identity object to manage the signin
-    private readonly SignInManager<User> signInManager;
-    private readonly UserManager<User> userManager;
-    // For DB Stufff
-    TravelExpertContext _context;
+    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager;
 
+    // For DB Stuff
+    private readonly TravelExpertContext _context;
 
     // Replaces manager classes and DI's inlandcontext
-    public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager, TravelExpertContext context)
+    public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager,
+        TravelExpertContext context)
     {
-        this.signInManager = signInManager;
-        this.userManager = userManager;
+        _signInManager = signInManager;
+        _userManager = userManager;
         _context = context;
-
     }
+
     // Generate a random booking number 
     public static string GenerateRandomBooking()
     {
@@ -41,108 +44,31 @@ public class PackagesController : Controller
         return new string(stringChars);
     }
 
-
-    // GET: PackageController
-    public ActionResult Index()
-    {
-        List<Package> packages = PackagesRepository.GetPackages(_context);
-        return View(packages);
-    }
-
-    // GET: PackageController/Details/5
-    public ActionResult Details(int id)
-    {
-        Package? package = PackagesRepository.GetPackageById(_context, id);
-        return View(package);
-    }
-
-    // GET: PackageController/Create
-    public ActionResult Create()
-    {
-        Package package = new Package();
-        return View(package);
-    }
-
-    // POST: PackageController/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Create(Package package)
-    {
-        try
-        {
-            if (ModelState.IsValid)
-            {
-                PackagesRepository.AddPackage(_context, package);
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return View(package);
-            }
-        }
-        catch
-        {
-            return View(package);
-        }
-    }
-
-    // GET: PackageController/Edit/5
-    public ActionResult Edit(int id)
-    {
-        Package? package = PackagesRepository.GetPackageById(_context, id);
-        return View(package);
-    }
-
-    // POST: PackageController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, Package package)
-    {
-        try
-        {
-            if (ModelState.IsValid)
-            {
-                PackagesRepository.UpdatePackage(_context, id, package);
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return View(package);
-            }
-        }
-        catch
-        {
-            return View(package);
-        }
-    }
-
-    // GET: PackageController/Delete/5
-    [HttpGet]
-    public ActionResult Delete(int id)
-    {
-        Package? package = PackagesRepository.GetPackageById(_context, id);
-        return View(package);
-    }
-
-    // POST: PackageController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
-    {
-        try
-        {
-            PackagesRepository.DeletePackage(_context, id);
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
-    }
     [Authorize]
-    public ActionResult ReviewBooking(int id)
-    {   
+    public async Task<ActionResult> ReviewBooking(int id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
 
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
         Package? package = PackagesRepository.GetPackageById(_context, id);
         BookingViewModel newBooking = new BookingViewModel()
         {
@@ -153,55 +79,272 @@ public class PackagesController : Controller
             Description = package.PkgDesc,
             BasePrice = package.PkgBasePrice,
             Travellers = 0,
-            TripType ="A",
-
+            TripType = "A",
         };
-        
 
         // Pass the list to the View using ViewBag
         ViewBag.List = GetTypes();
-        
 
         return View(newBooking);
     }
+
     [HttpPost]
     public async Task<IActionResult> ReviewBookingAsync(BookingViewModel newBookingViewModel)
-    {   
-        string bookingNo = GenerateRandomBooking();
-        var user = await userManager.GetUserAsync(User);
-        if (ModelState.IsValid) // Checks our models validity
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
+
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
         {
-            Booking newBooking = new Booking()
-            {
-                BookingDate = DateTime.Now,
-                BookingNo = bookingNo,
-                TravelerCount = newBookingViewModel.Travellers,
-                CustomerId = user.CustomerId,
-                TripTypeId = newBookingViewModel.TripType,
-                PackageId = newBookingViewModel.PackageID
-                
-
-
-            }; 
-            BookingRepository.AddBooking(_context, newBooking);
-            return RedirectToAction("Index","Home");
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
 
         }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
+        if (ModelState.IsValid) // Checks our models validity
+        {
+            // find the pending cart for the user
+            Cart? pendingCart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+            Cart cart;
+            if (pendingCart != null)
+            {
+                // use the pending cart
+                cart = pendingCart;
+            }
+            else
+            {
+                // create a new cart
+                cart = new Cart()
+                {
+                    CustomerId = (int)user.CustomerId,
+                    Status = CartStatus.Pending,
+                    CreatedAt = DateTime.Now,
+                };
+            }
+
+            CartItem cartItem = new CartItem()
+            {
+                Cart = cart,
+                PackageId = newBookingViewModel.PackageID,
+                Traveller = (int)newBookingViewModel.Travellers,
+                TripTypeId = newBookingViewModel.TripType,
+                Price = newBookingViewModel.BasePrice,
+            };
+
+            cart.SubTotal += cartItem.Price;
+            cart.Tax = CalculateGST(cart.SubTotal);
+            cart.Total = cart.SubTotal + cart.Tax;
+            CartRepository.AddOrUpdateCart(_context, cart);
+            CartItemRepository.AddCartItem(_context, cartItem);
+
+            return RedirectToAction("Payment", "Packages");
+        }
+
         //Reloads the page if the model is not valid
         ViewBag.List = GetTypes();
         return View();
     }
+
     private List<SelectListItem> GetTypes()
     {
         // get list of genres 
-        List<TripType> types = TripTypeRepository.getAllTrips( _context);
+        List<TripType> types = TripTypeRepository.getAllTrips(_context);
         // create a select / dropdown list of genres 
         var list = new SelectList(types, "TripTypeId", "Ttname").ToList();
         // ensure that a genre is not slected first so as to see all trip types 
-        list.Insert(0, new SelectListItem { Text = "Select your trip type!", Value = "A" , Disabled = true });
+        list.Insert(0, new SelectListItem { Text = "Select your trip type!", Value = "A", Disabled = true });
         // Returns the list
         return list;
     }
 
+    [Authorize]
+    public async Task<IActionResult> Payment()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var customer = new TravelExpertData.Models.Customer();
 
+        int customerId = Convert.ToInt32(user.CustomerId);
+        if (customerId != null)
+        {
+            customer = CustomerRepository.GetCustomerById(_context, customerId);
+        }
+        else
+        {
+
+        }
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        // get pending cart
+        Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+        if (cart == null)
+        {
+            Debug.WriteLine($"Can't find pending cart in Payment() with customer id: {user.CustomerId}");
+            TempData["ErrorMessage"] = ErrorMessages.GENERIC;
+            return View(new PaymentViewModel() { Cart = new Cart(), CartItems = new List<CartItem>() });
+        }
+
+        // get CartItem detail
+        List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
+
+        return View(new PaymentViewModel() { Cart = cart, CartItems = cartItems });
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> PaymentAsync(int CardId)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        // get Cart detail
+        Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
+        if (cart == null)
+        {
+            Debug.WriteLine($"Can't find pending cart in PaymentAsync() with customer id: {user.CustomerId}");
+            TempData["ErrorMessage"] = ErrorMessages.GENERIC;
+            return RedirectToAction("Payment", "Packages");
+        }
+
+        // get CartItem detail
+        List<CartItem> cartItems = CartItemRepository.GetCartItems(_context, cart.Id);
+
+        // is sufficient fund?
+        Wallet? wallet = WalletRepository.GetWallet(_context, (int)user.CustomerId);
+        if (wallet == null || wallet.Balance < cart.Total)
+        {
+            TempData["ErrorMessage"] = ErrorMessages.INSUFFICIENT_FUND;
+            return RedirectToAction("Payment", "Packages");
+        }
+
+        // deduct the amount from the wallet
+        wallet.Balance -= cart.Total;
+        WalletRepository.UpdateWallet(_context, wallet);
+
+        // create transaction
+        Transaction newTransaction = new Transaction()
+        {
+            WalletId = wallet.Id,
+            TransactionType = TransactionType.Debit,
+            Amount = cart.Total,
+            Description = "Payment for booking",
+            TransactionDate = DateTime.Now,
+        };
+        TransactionRepository.AddTransaction(_context, newTransaction);
+
+        // create booking
+        foreach (CartItem item in cartItems)
+        {
+            // Create a new booking
+            Booking newBooking = new Booking()
+            {
+                BookingDate = DateTime.Now,
+                BookingNo = GenerateRandomBooking(),
+                TravelerCount = item.Traveller,
+                CustomerId = user.CustomerId,
+                TripTypeId = item.TripTypeId,
+                PackageId = item.PackageId
+            };
+            BookingRepository.AddBooking(_context, newBooking);
+
+            TempData["BookingNo"] = newBooking.BookingNo;
+            TempData["BookingDate"] = newBooking.BookingDate?.ToString("yyyy-M-d");
+            TempData["TravelerCount"] = newBooking.TravelerCount.ToString();
+
+            // find the product_supplier_id
+            List<PackagesProductsSupplier> ppsList = PackageProductSupplierRepository.GetPackagesProductsSupplierByPackageId(_context, item.PackageId);
+
+            foreach (PackagesProductsSupplier pps in ppsList)
+            {
+                if (pps.IsActive == true)
+                {
+                    // Create booking Detail
+                    BookingDetail newBookingDetail = new BookingDetail()
+                    {
+                        ItineraryNo = cartItems.IndexOf(item) + 1,
+                        TripStart = item.Package.PkgStartDate,
+                        TripEnd = item.Package.PkgEndDate,
+                        Description = item.Package.PkgDesc,
+                        BasePrice = item.Price,
+                        AgencyCommission = 0,
+                        BookingId = newBooking.BookingId,
+                        ProductSupplierId = pps.ProductSupplierId,
+                    };
+                    BookingDetailRepository.AddBookingDetail(_context, newBookingDetail);
+                }
+            }
+
+            // Update the cart status
+            cart.Status = CartStatus.Completed;
+            CartRepository.UpdateCart(_context, cart);
+        }
+
+        return RedirectToAction("ThankYou");
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> RemoveItemAsync(int cartItemId, int cartId)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        CartItemRepository.RemoveCartItem(_context, cartItemId);
+
+        // update subtotal, tax, and total
+        Cart? cart = CartRepository.GetCartById(_context, cartId);
+        if (cart == null)
+        {
+            Debug.WriteLine($"Can't find cart with cart id: {cartId}");
+            return RedirectToAction("Index", "Home");
+        }
+
+        cart.SubTotal = cart.CartItems.Sum(ci => ci.Price);
+        cart.Tax = CalculateGST(cart.SubTotal);
+        cart.Total = cart.SubTotal + cart.Tax;
+        CartRepository.UpdateCart(_context, cart);
+
+        return RedirectToAction("Payment", "Packages");
+    }
+
+    private decimal CalculateGST(decimal basePrice)
+    {
+        const decimal GST_RATE = 0.05m;
+        return basePrice * GST_RATE;
+    }
+
+    public IActionResult ThankYou()
+    {
+        return View();
+    }
 }

@@ -1,0 +1,94 @@
+﻿@model TravelExpertMVC.Models.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+
+
+<div class="container">
+    <div class="bg-white text-black p-4">
+        <div class="row">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            <div class="col-md-9">
+                <h2>Booking Detail</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Travellers</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    @foreach (var cartItem in Model.CartItems)
+                    {
+                        <tbody>
+                        <tr>
+                            <td>@cartItem.Package.PkgName</td>
+                            <td>@cartItem.Package.PkgDesc</td>
+                            <td>@cartItem.Traveller</td>
+                            <td>@cartItem.Price.ToString("C2")</td>
+                            <td>
+                                <form asp-action="RemoveItem" method="post">
+                                    <input type="hidden" name="cartItemId" value="@cartItem.Id"/>
+                                    <input type="hidden" name="cartId" value="@Model.Cart.Id"/>
+                                    <button class="btn btn-sm btn-danger">×</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    }
+                </table>
+                <a href="/#vacation-packages" class="text-primary">&larr; Continue Shopping</a>
+            </div>
+            <div class="col-md-3">
+                <div class="border p-3 rounded bg-light">
+                    <h4>Payment Summary</h4>
+                    <p class="mb-2"><strong>Subtotal:</strong> @Model.Cart.SubTotal.ToString("C2")</p>
+                    <p class="mb-2"><strong>Tax:</strong> @Model.Cart.Tax.ToString("C2")</p>
+                    <p class="mb-3"><strong>Shipping:</strong> Free</p>
+                    <hr>
+                    <p class="mb-4"><strong>Total:</strong> @Model.Cart.Total.ToString("C2")</p>
+
+                    <form asp-action="Payment" method="post" id="paymentWithWallet">
+                        <input type="hidden" asp-for="Cart.Id" value="@Model.Cart.Id"/>
+                        <button type="button" class="btn btn-primary-custom w-100 mb-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Pay with Wallet</button>
+                    </form>
+                    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Payment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to proceed with the payment?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                    <button type="button" class="btn btn-primary" id="confirmYesButton">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary w-100">Other Payment Methods</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('confirmYesButton').addEventListener('click', function () {
+            document.getElementById('paymentWithWallet').submit();
+        });
+    </script>
+}

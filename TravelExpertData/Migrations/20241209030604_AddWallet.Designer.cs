@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelExpertData.Data;
 
@@ -11,9 +12,11 @@ using TravelExpertData.Data;
 namespace TravelExpertData.Migrations
 {
     [DbContext(typeof(TravelExpertContext))]
-    partial class TravelExpertContextModelSnapshot : ModelSnapshot
+    [Migration("20241209030604_AddWallet")]
+    partial class AddWallet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,72 +402,6 @@ namespace TravelExpertData.Migrations
                     b.ToTable("BookingDetails");
                 });
 
-            modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PackageId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("Traveller")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TripTypeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("PackageId");
-
-                    b.ToTable("CartItems");
-                });
-
             modelBuilder.Entity("TravelExpertData.Models.Class", b =>
                 {
                     b.Property<string>("ClassId")
@@ -717,11 +654,6 @@ namespace TravelExpertData.Migrations
 
                     b.Property<DateTime?>("PkgEndDate")
                         .HasColumnType("datetime");
-
-                    b.Property<string>("PkgImage")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PkgName")
                         .IsRequired()
@@ -1107,13 +1039,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5e8d5b9-acf0-43cc-866a-883578ecd872",
+                            ConcurrencyStamp = "e4e452cd-972b-406e-be5a-d67a9ac2686a",
                             EmailConfirmed = false,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b36706a2-9573-4a62-830d-d433f58028b7",
+                            SecurityStamp = "e8f093ad-91ef-4170-b9a9-5d80f56ec2cb",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1121,13 +1053,13 @@ namespace TravelExpertData.Migrations
                         {
                             Id = "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f53af150-036b-4165-b928-223028bc32d8",
+                            ConcurrencyStamp = "19a7b834-26b5-4664-8631-75ecc631fae0",
                             EmailConfirmed = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             PasswordHash = "agent",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ddf97509-8d8a-400f-be82-3f9228ad7cf4",
+                            SecurityStamp = "30a3541c-4e55-4429-8dcb-0d7c03e7e1be",
                             TwoFactorEnabled = false,
                             UserName = "agent"
                         });
@@ -1278,36 +1210,6 @@ namespace TravelExpertData.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
-                {
-                    b.HasOne("TravelExpertData.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.CartItem", b =>
-                {
-                    b.HasOne("TravelExpertData.Models.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelExpertData.Models.Package", "Package")
-                        .WithMany()
-                        .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Package");
-                });
-
             modelBuilder.Entity("TravelExpertData.Models.CreditCard", b =>
                 {
                     b.HasOne("TravelExpertData.Models.Customer", "Customer")
@@ -1450,11 +1352,6 @@ namespace TravelExpertData.Migrations
             modelBuilder.Entity("TravelExpertData.Models.Booking", b =>
                 {
                     b.Navigation("BookingDetails");
-                });
-
-            modelBuilder.Entity("TravelExpertData.Models.Cart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("TravelExpertData.Models.Class", b =>

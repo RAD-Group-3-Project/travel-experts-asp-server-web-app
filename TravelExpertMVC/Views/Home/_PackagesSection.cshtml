@@ -22,14 +22,14 @@
             {
                 <div class="col-md-4">
                     <div class="card bg-light">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="@package.PkgName" />
+                        <img src="@(package.PkgImage != "" ? "/images/" + package.PkgImage : "https://via.placeholder.com/400x300")" class="card-img-top" alt="@package.PkgName" />
                         <div class="card-body">
                             <h5 class="card-title text-dark fw-bold">@package.PkgName</h5>
                             <p class="card-text text-muted">@package.PkgDesc</p>
-                            <p class="card-text text-dark"><strong>Start Date:</strong> @package.PkgStartDate</p>
-                            <p class="card-text text-dark"><strong>Price:</strong> @package.PkgBasePrice</p>
+                            <p class="card-text text-dark"><strong>Start Date:</strong> @package.PkgStartDate?.ToString("MMMM dd, yyyy")</p>
+                            <p class="card-text text-dark"><strong>End Date:</strong> @package.PkgEndDate?.ToString("MMMM dd, yyyy")</p>
+                            <p class="card-text text-dark"><strong>Price:</strong> @package.PkgBasePrice.ToString("C2")</p>
                             <a href="@Url.Action("ReviewBooking", "Packages", new { id = package.PackageId })" class="btn btn-primary-custom">Book Now</a>
-                            
                         </div>
                     </div>
                 </div>
