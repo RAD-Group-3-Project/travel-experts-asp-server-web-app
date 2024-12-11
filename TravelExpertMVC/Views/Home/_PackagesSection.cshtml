@@ -26,9 +26,9 @@
                         <div class="card-body">
                             <h5 class="card-title text-dark fw-bold">@package.PkgName</h5>
                             <p class="card-text text-muted">@package.PkgDesc</p>
-                            <p class="card-text text-dark"><strong>Start Date:</strong> @package.PkgStartDate?.ToString("MMMM dd, yyyy")</p>
-                            <p class="card-text text-dark"><strong>End Date:</strong> @package.PkgEndDate?.ToString("MMMM dd, yyyy")</p>
-                            <p class="card-text text-dark"><strong>Price:</strong> @package.PkgBasePrice.ToString("C2")</p>
+                            <p class="@(package.PkgStartDate < DateTime.Now ? "text-danger" : "text-dark")"><strong>Start Date:</strong> @package.PkgStartDate?.ToString("MMMM dd, yyyy")</p>
+                            <p class="@(package.PkgStartDate < DateTime.Now ? "text-danger" : "text-dark")"><strong>End Date:</strong> @package.PkgEndDate?.ToString("MMMM dd, yyyy")</p>
+                            <p class="@(package.PkgStartDate < DateTime.Now ? "text-danger" : "text-dark")"><strong>Price:</strong> @package.PkgBasePrice.ToString("C2")</p>
                             <a href="@Url.Action("ReviewBooking", "Packages", new { id = package.PackageId })" class="btn btn-primary-custom">Book Now</a>
                         </div>
                     </div>
