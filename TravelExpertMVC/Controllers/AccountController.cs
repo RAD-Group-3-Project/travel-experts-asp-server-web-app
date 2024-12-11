@@ -54,7 +54,7 @@ public class AccountController : Controller
         return View();
     }
 
-    public IActionResult Register(RegisterViewModel newRegistration)
+    public IActionResult Register()
     {
         TempData["IsCustomBg"] = true;
 
