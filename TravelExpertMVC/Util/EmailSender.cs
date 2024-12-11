@@ -13,16 +13,22 @@ namespace TravelExpertMVC.Util
             {
                 EnableSsl = true,
                 //UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("travelexpert.group3@gmail.com", "ehge tszh wgcs ppqp")
+                Credentials = new NetworkCredential("travelexpert.group3@gmail.com", "")
             };
 
             return client.SendMailAsync(
-                new MailMessage(from: new MailAddress("travelexpert.group3@gmail.com"),
+                new MailMessage(from: "travelexpert.group3@gmail.com",
                                 to: email,
                                 subject,
                                 message
-                                ));
+                                )
+                {
+                    IsBodyHtml = true
+                }
+                );
+
         }
+
     }
 
 }

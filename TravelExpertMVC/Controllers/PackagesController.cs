@@ -267,6 +267,8 @@ public class PackagesController : Controller
 
         List<string> bookingNoList = [];
         List<string> bookingDateList = [];
+        List<string> bookingNameList = [];
+        
 
         // create booking
         foreach (CartItem item in cartItems)
@@ -285,6 +287,7 @@ public class PackagesController : Controller
 
             bookingNoList.Add(newBooking.BookingNo);
             bookingDateList.Add(newBooking.BookingDate?.ToString("yyyy-M-d")!);
+            bookingNameList.Add(newBooking.Package.PkgName);
 
             // find the product_supplier_id
             List<PackagesProductsSupplier> ppsList = PackageProductSupplierRepository.GetPackagesProductsSupplierByPackageId(_context, item.PackageId);
@@ -317,13 +320,61 @@ public class PackagesController : Controller
         TempData["BookingNoList"] = bookingNoList;
         TempData["BookingDateList"] = bookingDateList;
         var customer = CustomerRepository.GetCustomerById(_context, (int)user.CustomerId);
-        
+        var emailbookings = String.Join(",", bookingNoList);
+        var emailbookingdates = String.Join(",", bookingDateList);
+        var locations = String.Join(",", bookingNameList);
         // sending the email with booking no and date to user
-        await _emailsender.SendEmailAsync(
-            customer.CustEmail,
-            "Congratulations! You are BOOKED! ", 
-            $"Youre booked on the following flights {bookingNoList} on the following dates {bookingDateList}. See you then!  "
+        try
+        {
+            await _emailsender.SendEmailAsync(
+                customer.CustEmail,
+                $"Congratulations {customer.CustFirstName}! You are BOOKED!",
+                $@"
+                    <!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <title>Flight Booking Confirmation</title>
+                        <style>
+                            body {{ font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }}
+                            .container {{ background-color: #ffffff; padding: 20px; margin: 20px auto; width: 80%; max-width: 600px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }}
+                            h1 {{ color: #007bff; font-size: 28px; text-align: center; }}
+                            p {{ font-size: 18px; color: #333; line-height: 1.6; }}
+                            .booking-details {{ font-size: 16px; margin: 20px 0; }}
+                            .booking-details span {{ font-weight: bold; color: #007bff; }}
+                            .footer {{ text-align: center; margin-top: 20px; font-size: 14px; color: #999; }}
+                            .highlight {{ font-size: 20px; font-weight: bold; color: #ff5722; }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <h1>Flight Booking Confirmation</h1>
+                            <p>Dear {customer.CustFirstName} {customer.CustLastName},</p>
+                            <p>We’re excited to confirm your upcoming flights! You’re booked on the following flights:</p>
+        
+                            <div class='booking-details'>
+                                <p><span>Booking Numbers:</span> <span class='highlight'>{emailbookings}</span></p>
+                                <p><span>Locations:</span> <span class='highlight'>{locations}</span></p>
+                                <p><span>Dates:</span> <span class='highlight'>{emailbookingdates}</span></p>
+                            </div>
+
+                            <p>See you soon on your journey. Safe travels!</p>
+
+                            <div class='footer'>
+                                <p>If you have any questions, feel free to reach out to us.</p>
+                                <p>&copy; Travel Experts</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>"
             );
+        }
+        catch (Exception ex)
+        {
+            // Log the exception and handle the error (e.g., notify the user or retry)
+            //_logger.LogError(ex, "Error sending email.");
+        }
 
 
 
