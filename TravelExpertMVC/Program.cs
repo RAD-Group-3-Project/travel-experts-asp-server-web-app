@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
+using TravelExpertMVC.Util;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("TravelExpertCo
 builder.Services.AddDbContext<TravelExpertContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<User, IdentityRole>(
