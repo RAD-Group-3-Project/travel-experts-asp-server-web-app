@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
@@ -16,17 +18,20 @@ public class PackagesController : Controller
     // Identity object to manage the signin
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
+    private readonly IEmailSender _emailsender;
+
 
     // For DB Stuff
     private readonly TravelExpertContext _context;
 
     // Replaces manager classes and DI's inlandcontext
     public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager,
-        TravelExpertContext context)
+        TravelExpertContext context, IEmailSender emailSender)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _context = context;
+        _emailsender = emailSender;
     }
 
     // Generate a random booking number 
@@ -217,7 +222,8 @@ public class PackagesController : Controller
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> PaymentAsync(int CardId)
-    {
+    {   
+        // Send email details 
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
@@ -259,6 +265,9 @@ public class PackagesController : Controller
         };
         TransactionRepository.AddTransaction(_context, newTransaction);
 
+        List<string> bookingNoList = [];
+        List<string> bookingDateList = [];
+
         // create booking
         foreach (CartItem item in cartItems)
         {
@@ -274,9 +283,8 @@ public class PackagesController : Controller
             };
             BookingRepository.AddBooking(_context, newBooking);
 
-            TempData["BookingNo"] = newBooking.BookingNo;
-            TempData["BookingDate"] = newBooking.BookingDate?.ToString("yyyy-M-d");
-            TempData["TravelerCount"] = newBooking.TravelerCount.ToString();
+            bookingNoList.Add(newBooking.BookingNo);
+            bookingDateList.Add(newBooking.BookingDate?.ToString("yyyy-M-d")!);
 
             // find the product_supplier_id
             List<PackagesProductsSupplier> ppsList = PackageProductSupplierRepository.GetPackagesProductsSupplierByPackageId(_context, item.PackageId);
@@ -305,6 +313,19 @@ public class PackagesController : Controller
             cart.Status = CartStatus.Completed;
             CartRepository.UpdateCart(_context, cart);
         }
+
+        TempData["BookingNoList"] = bookingNoList;
+        TempData["BookingDateList"] = bookingDateList;
+        var customer = CustomerRepository.GetCustomerById(_context, (int)user.CustomerId);
+        
+        // sending the email with booking no and date to user
+        await _emailsender.SendEmailAsync(
+            customer.CustEmail,
+            "Congratulations! You are BOOKED! ", 
+            $"Youre booked on the following flights {bookingNoList} on the following dates {bookingDateList}. See you then!  "
+            );
+
+
 
         return RedirectToAction("ThankYou");
     }
