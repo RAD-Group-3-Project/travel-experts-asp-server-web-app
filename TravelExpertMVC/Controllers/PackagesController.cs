@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
@@ -15,20 +14,13 @@ namespace TravelExpertMVC.Controllers;
 
 public class PackagesController : Controller
 {
-    // Identity object to manage the signin
-    private readonly SignInManager<User> _signInManager;
+    private readonly TravelExpertContext _context;
     private readonly UserManager<User> _userManager;
     private readonly IEmailSender _emailsender;
 
-
-    // For DB Stuff
-    private readonly TravelExpertContext _context;
-
     // Replaces manager classes and DI's inlandcontext
-    public PackagesController(SignInManager<User> signInManager, UserManager<User> userManager,
-        TravelExpertContext context, IEmailSender emailSender)
+    public PackagesController(UserManager<User> userManager, TravelExpertContext context, IEmailSender emailSender)
     {
-        _signInManager = signInManager;
         _userManager = userManager;
         _context = context;
         _emailsender = emailSender;
@@ -53,17 +45,14 @@ public class PackagesController : Controller
     public async Task<ActionResult> ReviewBooking(int id)
     {
         var user = await _userManager.GetUserAsync(User);
-        var customer = new TravelExpertData.Models.Customer();
-
-        int customerId = Convert.ToInt32(user.CustomerId);
-        if (customerId != null)
+        if (user == null)
         {
-            customer = CustomerRepository.GetCustomerById(_context, customerId);
+            return RedirectToAction("Login", "Account");
         }
-        else
-        {
 
-        }
+        var customerId = Convert.ToInt32(user.CustomerId);
+        var customer = CustomerRepository.GetCustomerById(_context, customerId);
+
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
@@ -74,6 +63,7 @@ public class PackagesController : Controller
             // Default image if no profile image is set
             ViewBag.Image = "/images/profileImages/default.jpg";
         }
+
         Package? package = PackagesRepository.GetPackageById(_context, id);
         BookingViewModel newBooking = new BookingViewModel()
         {
@@ -97,17 +87,14 @@ public class PackagesController : Controller
     public async Task<IActionResult> ReviewBookingAsync(BookingViewModel newBookingViewModel)
     {
         var user = await _userManager.GetUserAsync(User);
-        var customer = new TravelExpertData.Models.Customer();
-
-        int customerId = Convert.ToInt32(user.CustomerId);
-        if (customerId != null)
+        if (user == null)
         {
-            customer = CustomerRepository.GetCustomerById(_context, customerId);
+            return RedirectToAction("Login", "Account");
         }
-        else
-        {
 
-        }
+        var customerId = Convert.ToInt32(user.CustomerId);
+        var customer = CustomerRepository.GetCustomerById(_context, customerId);
+
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
@@ -178,17 +165,14 @@ public class PackagesController : Controller
     public async Task<IActionResult> Payment()
     {
         var user = await _userManager.GetUserAsync(User);
-        var customer = new TravelExpertData.Models.Customer();
-
-        int customerId = Convert.ToInt32(user.CustomerId);
-        if (customerId != null)
+        if (user == null)
         {
-            customer = CustomerRepository.GetCustomerById(_context, customerId);
+            return RedirectToAction("Login", "Account");
         }
-        else
-        {
 
-        }
+        var customerId = Convert.ToInt32(user.CustomerId);
+        var customer = CustomerRepository.GetCustomerById(_context, customerId);
+
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
@@ -199,17 +183,11 @@ public class PackagesController : Controller
             // Default image if no profile image is set
             ViewBag.Image = "/images/profileImages/default.jpg";
         }
-        if (user == null)
-        {
-            return RedirectToAction("Login", "Account");
-        }
 
         // get pending cart
         Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
         if (cart == null)
         {
-            Debug.WriteLine($"Can't find pending cart in Payment() with customer id: {user.CustomerId}");
-            TempData["ErrorMessage"] = ErrorMessages.GENERIC;
             return View(new PaymentViewModel() { Cart = new Cart(), CartItems = new List<CartItem>() });
         }
 
@@ -222,8 +200,7 @@ public class PackagesController : Controller
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> PaymentAsync(int CardId)
-    {   
-        // Send email details 
+    {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
@@ -244,7 +221,12 @@ public class PackagesController : Controller
 
         // is sufficient fund?
         Wallet? wallet = WalletRepository.GetWallet(_context, (int)user.CustomerId);
-        if (wallet == null || wallet.Balance < cart.Total)
+        if (wallet == null)
+        {
+            TempData["ErrorMessage"] = ErrorMessages.WALLET_NOT_FOUND;
+            return RedirectToAction("Payment", "Packages");
+        }
+        else if (wallet.Balance < cart.Total)
         {
             TempData["ErrorMessage"] = ErrorMessages.INSUFFICIENT_FUND;
             return RedirectToAction("Payment", "Packages");
@@ -268,7 +250,6 @@ public class PackagesController : Controller
         List<string> bookingNoList = [];
         List<string> bookingDateList = [];
         List<string> bookingNameList = [];
-        
 
         // create booking
         foreach (CartItem item in cartItems)
@@ -299,7 +280,7 @@ public class PackagesController : Controller
                     // Create booking Detail
                     BookingDetail newBookingDetail = new BookingDetail()
                     {
-                        ItineraryNo = cartItems.IndexOf(item) + 1,
+                        ItineraryNo = new Random().Next(100, 1000),
                         TripStart = item.Package.PkgStartDate,
                         TripEnd = item.Package.PkgEndDate,
                         Description = item.Package.PkgDesc,
@@ -317,15 +298,16 @@ public class PackagesController : Controller
             CartRepository.UpdateCart(_context, cart);
         }
 
-        TempData["BookingNoList"] = bookingNoList;
-        TempData["BookingDateList"] = bookingDateList;
         var customer = CustomerRepository.GetCustomerById(_context, (int)user.CustomerId);
-        var emailbookings = String.Join(",", bookingNoList);
-        var emailbookingdates = String.Join(",", bookingDateList);
+        var formattedBookingNo = String.Join(",", bookingNoList);
+        var formattedBookingDate = String.Join(",", bookingDateList);
         var locations = String.Join(",", bookingNameList);
-        // sending the email with booking no and date to user
+
+        TempData["bookingNo"] = formattedBookingNo;
+
         try
         {
+            // sending the email with booking no and date to user
             await _emailsender.SendEmailAsync(
                 customer.CustEmail,
                 $"Congratulations {customer.CustFirstName}! You are BOOKED!",
@@ -354,9 +336,9 @@ public class PackagesController : Controller
                             <p>We’re excited to confirm your upcoming flights! You’re booked on the following flights:</p>
         
                             <div class='booking-details'>
-                                <p><span>Booking Numbers:</span> <span class='highlight'>{emailbookings}</span></p>
+                                <p><span>Booking Numbers:</span> <span class='highlight'>{formattedBookingNo}</span></p>
                                 <p><span>Locations:</span> <span class='highlight'>{locations}</span></p>
-                                <p><span>Dates:</span> <span class='highlight'>{emailbookingdates}</span></p>
+                                <p><span>Dates:</span> <span class='highlight'>{formattedBookingDate}</span></p>
                             </div>
 
                             <p>See you soon on your journey. Safe travels!</p>
@@ -372,11 +354,11 @@ public class PackagesController : Controller
         }
         catch (Exception ex)
         {
-            // Log the exception and handle the error (e.g., notify the user or retry)
-            //_logger.LogError(ex, "Error sending email.");
+            // write log
+            Debug.WriteLine($"Error sending email: {ex.Message}");
+            TempData["ErrorMessage"] = ErrorMessages.EMAIL_SENDING_FAILED;
+            return RedirectToAction("Payment", "Packages");
         }
-
-
 
         return RedirectToAction("ThankYou");
     }
@@ -404,6 +386,13 @@ public class PackagesController : Controller
         cart.SubTotal = cart.CartItems.Sum(ci => ci.Price);
         cart.Tax = CalculateGST(cart.SubTotal);
         cart.Total = cart.SubTotal + cart.Tax;
+
+        // Check if CartItems is empty and set status to Cancelled
+        if (!cart.CartItems.Any())
+        {
+            cart.Status = CartStatus.Cancelled;
+        }
+
         CartRepository.UpdateCart(_context, cart);
 
         return RedirectToAction("Payment", "Packages");
@@ -415,8 +404,30 @@ public class PackagesController : Controller
         return basePrice * GST_RATE;
     }
 
-    public IActionResult ThankYou()
+    [Authorize]
+    public async Task<IActionResult> ThankYou()
     {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var customerId = Convert.ToInt32(user.CustomerId);
+        var customer = CustomerRepository.GetCustomerById(_context, customerId);
+
+        if (!string.IsNullOrEmpty(customer.ProfileImg))
+        {
+            // If there's a profile image, set the full path
+            ViewBag.Image = $"/images/profileImages/{customer.ProfileImg}?t={DateTime.Now.Ticks}";
+        }
+        else
+        {
+            // Default image if no profile image is set
+            ViewBag.Image = "/images/profileImages/default.jpg";
+        }
+
         return View();
     }
+
 }

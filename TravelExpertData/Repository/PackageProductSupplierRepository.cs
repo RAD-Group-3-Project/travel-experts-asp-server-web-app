@@ -6,6 +6,6 @@ public class PackageProductSupplierRepository
 {
     public static List<PackagesProductsSupplier> GetPackagesProductsSupplierByPackageId(TravelExpertContext context, int packageId)
     {
-        return context.PackagesProductsSuppliers.Where(p => p.PackageId == packageId).ToList();
+        return context.PackagesProductsSuppliers.Where(pps => pps.PackageId == packageId && pps.IsActive == true).ToList();
     }
 }
