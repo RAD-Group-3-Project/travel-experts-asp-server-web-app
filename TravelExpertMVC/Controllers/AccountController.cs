@@ -67,6 +67,12 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> RegisterAsync(RegisterViewModel newRegistration)
     {
+
+        TempData["IsCustomBg"] = true;
+
+        ViewBag.Provinces = new SelectList(Utils.Provinces);
+        ViewBag.Cities = new SelectList(Utils.Cities);
+
         if (ModelState.IsValid)
         {
             Customer newCustomer = new Customer()
