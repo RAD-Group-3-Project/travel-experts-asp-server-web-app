@@ -256,7 +256,6 @@ public class PackagesController : Controller
         List<string> bookingDateList = [];
         List<string> bookingNameList = [];
 
-
         // create booking
         foreach (CartItem item in cartItems)
         {
@@ -359,11 +358,11 @@ public class PackagesController : Controller
         }
         catch (Exception ex)
         {
-            // Log the exception and handle the error (e.g., notify the user or retry)
-            //_logger.LogError(ex, "Error sending email.");
+            // write log
+            Debug.WriteLine($"Error sending email: {ex.Message}");
+            TempData["ErrorMessage"] = ErrorMessages.EMAIL_SENDING_FAILED;
+            return RedirectToAction("Payment", "Packages");
         }
-
-
 
         return RedirectToAction("ThankYou");
     }
