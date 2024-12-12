@@ -1,35 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Thank You";
 }
-
-<div class="container bg-white text-black">
-    <div class="d-flex flex-column text-center">
-        <h1 class="display-3 mb-2">Thank you for your purchase!</h1>
-        <p class="lead">Your order has been successfully placed.</p>
-        <p>Booking No: @TempData["BookingNo"]</p>
-        <p>Booking Date: @TempData["BookingDate"]</p>
-        <p>Number of travellers: @TempData["TravelerCount"]</p>
-        <hr />
-        <p>
-            You will be redirected back to homepage in
-            <span id="countdown">10</span> seconds.
-        </p>
-        <p>
-            If you are not redirected,
-            <a asp-area="" asp-controller="Home" asp-action="Index">click here to return.</a>
-        </p>
+<div class="container">
+    <div class="d-flex flex-column justify-content-center align-items-center bg-white text-black vh-100">
+            <h1 class="display-3 mb-2">Thank you for your purchase!</h1>
+            <p class="lead">Your order has been successfully placed.</p>
+            @if (TempData["bookingNo"] != null)
+            {
+                <p>Booking No: @TempData["bookingNo"]</p>
+            }
+            <hr class="w-100"/>
+            <p>
+                You will be redirected back to homepage in
+                <span id="countdown">10</span> seconds.
+            </p>
+            <p>
+                If you are not redirected,
+                <a asp-area="" asp-controller="Home" asp-action="Index">click here to return.</a>
+            </p>
     </div>
 </div>
 
+
 @section Scripts {
-    <script>
-        let count = parseInt(document.getElementById("countdown").innerHTML);
-        var interval = setInterval(() => {
-            document.getElementById("countdown").innerHTML = --count;
-            if (count <= 0) {
-                clearInterval(interval);
-                window.location.replace("/");
-            }
-        }, 1000);
-    </script>
+    @* <script>
+         let count = parseInt(document.getElementById("countdown").innerHTML);
+         var interval = setInterval(() => {
+             document.getElementById("countdown").innerHTML = --count;
+             if (count <= 0) {
+                 clearInterval(interval);
+                 window.location.replace("/");
+             }
+         }, 1000);
+     </script> *@
 }
