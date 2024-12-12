@@ -280,7 +280,7 @@ public class PackagesController : Controller
                     // Create booking Detail
                     BookingDetail newBookingDetail = new BookingDetail()
                     {
-                        ItineraryNo = cartItems.IndexOf(item) + 1,
+                        ItineraryNo = new Random().Next(100, 1000),
                         TripStart = item.Package.PkgStartDate,
                         TripEnd = item.Package.PkgEndDate,
                         Description = item.Package.PkgDesc,
