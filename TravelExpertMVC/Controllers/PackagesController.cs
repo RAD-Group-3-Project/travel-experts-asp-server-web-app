@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Diagnostics;
 using TravelExpertData.Data;
 using TravelExpertData.Models;
@@ -97,17 +96,14 @@ public class PackagesController : Controller
     public async Task<IActionResult> ReviewBookingAsync(BookingViewModel newBookingViewModel)
     {
         var user = await _userManager.GetUserAsync(User);
-        var customer = new TravelExpertData.Models.Customer();
-
-        int customerId = Convert.ToInt32(user.CustomerId);
-        if (customerId != null)
+        if (user == null)
         {
-            customer = CustomerRepository.GetCustomerById(_context, customerId);
+            return RedirectToAction("Login", "Account");
         }
-        else
-        {
 
-        }
+        var customerId = Convert.ToInt32(user.CustomerId);
+        var customer = CustomerRepository.GetCustomerById(_context, customerId);
+
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
@@ -178,17 +174,14 @@ public class PackagesController : Controller
     public async Task<IActionResult> Payment()
     {
         var user = await _userManager.GetUserAsync(User);
-        var customer = new TravelExpertData.Models.Customer();
-
-        int customerId = Convert.ToInt32(user.CustomerId);
-        if (customerId != null)
+        if (user == null)
         {
-            customer = CustomerRepository.GetCustomerById(_context, customerId);
+            return RedirectToAction("Login", "Account");
         }
-        else
-        {
 
-        }
+        var customerId = Convert.ToInt32(user.CustomerId);
+        var customer = CustomerRepository.GetCustomerById(_context, customerId);
+
         if (!string.IsNullOrEmpty(customer.ProfileImg))
         {
             // If there's a profile image, set the full path
@@ -199,17 +192,11 @@ public class PackagesController : Controller
             // Default image if no profile image is set
             ViewBag.Image = "/images/profileImages/default.jpg";
         }
-        if (user == null)
-        {
-            return RedirectToAction("Login", "Account");
-        }
 
         // get pending cart
         Cart? cart = CartRepository.GetPendingCart(_context, (int)user.CustomerId);
         if (cart == null)
         {
-            Debug.WriteLine($"Can't find pending cart in Payment() with customer id: {user.CustomerId}");
-            TempData["ErrorMessage"] = ErrorMessages.GENERIC;
             return View(new PaymentViewModel() { Cart = new Cart(), CartItems = new List<CartItem>() });
         }
 
@@ -222,7 +209,7 @@ public class PackagesController : Controller
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> PaymentAsync(int CardId)
-    {   
+    {
         // Send email details 
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -268,7 +255,7 @@ public class PackagesController : Controller
         List<string> bookingNoList = [];
         List<string> bookingDateList = [];
         List<string> bookingNameList = [];
-        
+
 
         // create booking
         foreach (CartItem item in cartItems)
