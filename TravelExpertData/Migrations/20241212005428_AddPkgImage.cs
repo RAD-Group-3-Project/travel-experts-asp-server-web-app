@@ -5,7 +5,7 @@
 namespace TravelExpertData.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPkgImg : Migration
+    public partial class AddPkgImage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,8 +13,8 @@ namespace TravelExpertData.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "PkgImage",
                 table: "Packages",
-                type: "nvarchar(50)",
-                maxLength: 50,
+                type: "nvarchar(200)",
+                maxLength: 200,
                 nullable: false,
                 defaultValue: "");
 
@@ -23,14 +23,14 @@ namespace TravelExpertData.Migrations
                 keyColumn: "Id",
                 keyValue: "9ADADFDC-411F-4AD4-BCD0-4FFA2A658206",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "f53af150-036b-4165-b928-223028bc32d8", "ddf97509-8d8a-400f-be82-3f9228ad7cf4" });
+                values: new object[] { "ccfa5876-a370-458d-97ff-1721df3aed53", "e9fc098d-19a0-41d9-87b9-b4d587860ffd" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "B2FFD600-873E-4789-9A02-25EC2C37A7A1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "b5e8d5b9-acf0-43cc-866a-883578ecd872", "b36706a2-9573-4a62-830d-d433f58028b7" });
+                values: new object[] { "03dcd96a-d38d-4565-a19a-68842171828a", "f380d3a1-cffe-47ba-b588-d90b8f813693" });
         }
 
         /// <inheritdoc />
