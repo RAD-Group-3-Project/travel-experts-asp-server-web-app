@@ -18,7 +18,9 @@
             </div>
             <div class="mb-4">
                 <label asp-for="Password" class="form-label" style="color: #002A45;">Password</label>
-                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password"/>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" id="pwInput" />
+                <input type="checkbox" onclick="showPassword()" style="color: #002A45" />
+                <span style="color: #002A45;">Show Password</span>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div>
@@ -35,4 +37,16 @@
             <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-decoration-none text-accent">Register</a>
         </p>
     </div>
+
 </section>
+<script>
+    function showPassword() {
+        var x = document.getElementById("pwInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+
