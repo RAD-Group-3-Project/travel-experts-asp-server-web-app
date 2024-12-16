@@ -2,9 +2,11 @@
 
 @{
     ViewData["ActiveSection"] = "Packages";
+    
 }
 
-<section id="about-packages" class="py-5">
+<div class="bg-dark">
+    <section id="about-packages" class="pt-5 pb-1">
     <div class="container text-center">
         <h2 class="fs-2 text-warning fw-bold mb-3">Why Choose Our Packages?</h2>
         <p class="text-light mb-4">
@@ -14,7 +16,7 @@
         </p>
     </div>
 </section>
-<section id="vacation-packages" class="py-5 bg-dark">
+<section id="vacation-packages" class="py-5">
     <div class="container text-center">
         <h2 class="fs-2 text-warning fw-bold mb-5">Vacation Packages</h2>
         <div class="row g-4">
@@ -22,7 +24,13 @@
             {
                 <div class="col-md-4">
                     <div class="card bg-light">
-                        <img src="@(package.PkgImage != "" ? "/images/" + package.PkgImage : "https://via.placeholder.com/400x300")" class="card-img-top" alt="@package.PkgName" />
+                        @{
+                            string imageSrc = !string.IsNullOrEmpty(package.PkgImage) && 
+                                              package.PkgImage.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                                ? package.PkgImage
+                            : Url.Content($"~/images/{package.PkgImage}");
+                        }
+                        <img src="@imageSrc" class="card-img-top" alt="@package.PkgName" />
                         <div class="card-body">
                             <h5 class="card-title text-dark fw-bold">@package.PkgName</h5>
                             <p class="card-text text-muted">@package.PkgDesc</p>
@@ -37,3 +45,4 @@
         </div>
     </div>
 </section>
+</div>

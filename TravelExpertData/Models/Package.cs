@@ -29,7 +29,7 @@ public partial class Package
     [Column("is_active")]
     public bool? IsActive { get; set; }
 
-    [StringLength(50)]
+    [StringLength(200)]
     public string PkgImage { get; set; }
 
     [InverseProperty("Package")]

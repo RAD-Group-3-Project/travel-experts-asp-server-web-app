@@ -5,36 +5,36 @@
 }
 
 <div class="container my-5">
-    <div class="min-vh-100 d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
         <div class="bg-white text-black rounded shadow p-4 p-md-5 w-100" style="max-width: 70%;">
             <h2 class="text-center text-primary mb-4 fs-1">Register</h2>
             <hr class="border border-1" />
             <form asp-action="Register" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                 <div class="row">
                     <div class="col-6 mb-3">
-                        <label asp-for="FirstName" class="form-label"> </label>
+                        <label asp-for="FirstName" class="form-label">First Name <span class="text-danger">*</span></label>
                         <input asp-for="FirstName" class="form-control" type="text" placeholder="Enter your first name"/>
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="col-6 mb-3">
-                        <label asp-for="LastName" class="form-label"> </label>
+                        <label asp-for="LastName" class="form-label">Last Name <span class="text-danger">*</span></label>
                         <input asp-for="LastName" class="form-control" type="text" placeholder="Enter your last name" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-4 mb-3">
-                        <label asp-for="Email" class="form-label"> </label>
+                        <label asp-for="Email" class="form-label">Email <span class="text-danger">*</span></label>
                         <input asp-for="Email" class="form-control" type="email" placeholder="Enter your email" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="col-4 mb-3">
-                        <label asp-for="HomePhone" class="form-label"> </label>
-                        <input asp-for="HomePhone" class="form-control" type="tel" placeholder="Enter your home phone" />
+                        <label asp-for="HomePhone" class="form-label">Home Phone</label>
+                        <input asp-for="HomePhone" class="form-control" type="tel" placeholder="Enter your home phone (Optional)" />
                         <span asp-validation-for="HomePhone" class="text-danger"></span>
                     </div>
                     <div class="col-4 mb-3">
-                        <label asp-for="BusPhone" class="form-label"> </label>
+                        <label asp-for="BusPhone" class="form-label">Business Phone <span class="text-danger">*</span></label>
                         <input asp-for="BusPhone" class="form-control" type="tel" placeholder="Enter your business phone" />
                         <span asp-validation-for="BusPhone" class="text-danger"></span>
                     </div>
@@ -42,19 +42,19 @@
                 <hr class="border border-1" />
                 <div class="row">
                     <div class="col-6 mb-3">
-                        <label asp-for="Address" class="form-label"> </label>
+                        <label asp-for="Address" class="form-label">Address <span class="text-danger">*</span></label>
                         <input asp-for="Address" class="form-control" type="text" placeholder="Enter your address" />
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
                     <div class="col-3 mb-3">
-                        <label asp-for="City" class="form-label"> </label>
+                        <label asp-for="City" class="form-label">City <span class="text-danger">*</span></label>
                         <select asp-for="City" asp-items="@ViewBag.Cities" class="form-select">
                             <option value="" disabled selected>Select your city</option>
                         </select>
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="col-3 mb-3">
-                        <label asp-for="Prov" class="form-label"> </label>
+                        <label asp-for="Prov" class="form-label">Province <span class="text-danger">*</span></label>
                         <select asp-for="Prov" asp-items="@ViewBag.Provinces" class="form-select">
                             <option value="" disabled selected>Select your province</option>
                         </select>
@@ -63,12 +63,12 @@
                 </div>
                 <div class="row">
                     <div class="col-6 mb-3">
-                        <label asp-for="Postal" class="form-label"> </label>
+                        <label asp-for="Postal" class="form-label">Postal Code <span class="text-danger">*</span></label>
                         <input asp-for="Postal" class="form-control" type="text" placeholder="Enter your postal code" />
                         <span asp-validation-for="Postal" class="text-danger"></span>
                     </div>
                     <div class="col-6 mb-3">
-                        <label asp-for="Country" class="form-label"> </label>
+                        <label asp-for="Country" class="form-label">Country <span class="text-danger">*</span></label>
                         <input asp-for="Country" class="form-control" type="text" placeholder="Enter your country" />
                         <span asp-validation-for="Country" class="text-danger"></span>
                     </div>
@@ -76,14 +76,13 @@
                 <hr class="border border-1"/>
                 <div>
                     <div class="mb-3">
-                        <label asp-for="Password" class="form-label"> </label>
-                        <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" id="pwInput" />
+                        <label asp-for="Password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input id="pwInput" asp-for="Password" class="form-control" type="password" placeholder="Enter your password"/>
                         <span asp-validation-for="Password" class="text-danger"></span>
-
                     </div>
                     <div class="mb-4">
-                        <label asp-for="ConfirmPassword" class="form-label"> </label>
-                        <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm your password" id="pwInput2" />
+                        <label asp-for="ConfirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                        <input id="pwInput2" asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm your password" />
                         <input type="checkbox" onclick="showPasswords()" style="color: #002A45" />
                         <span style="color: #002A45;">Show Password</span>
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>

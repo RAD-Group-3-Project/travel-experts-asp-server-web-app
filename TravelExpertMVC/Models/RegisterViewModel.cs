@@ -40,12 +40,12 @@ namespace TravelExpertMVC.Models
         [StringLength(25, ErrorMessage = "Country characters cannot exceed 25 characters")]
         public string? Country { get; set; }
 
-        [Required(ErrorMessage = "Home Phone number is required")]
         [Display(Name = "Home Phone")]
         [StringLength(20, ErrorMessage = "Home Phone number character cannot exceed 20 characters")]
         [RegularExpression(@"^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$", ErrorMessage = "Invalid phone number format")]
         public string? HomePhone { get; set; }
 
+        [Required(ErrorMessage = "Business Phone number is required")]
         [Display(Name = "Business Phone")]
         [StringLength(20, ErrorMessage = "Business Phone number characters cannot exceed 20 characters")]
         [RegularExpression(@"^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$", ErrorMessage = "Invalid phone number format")]
